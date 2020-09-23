@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["ADMIN", "USER"],
-      required: true,
       default: "USER",
     },
     photo: {
@@ -72,4 +71,4 @@ userSchema.methods.isCorrectPassword = async function (plainTextPassword) {
   return await bcrypt.compare(plainTextPassword, this.password);
 };
 
-modules.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
