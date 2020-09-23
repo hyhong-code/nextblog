@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const connectDB = require("./config/db");
 
+const blogRouter = require("./routes/blog");
+
 const app = express();
 connectDB();
 
@@ -15,6 +17,9 @@ app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
   app.use(cors({ origin: process.env.CLIENT_URL }));
 }
+
+// Mount Routers
+app.use("/api/v1/blogs", blogRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Server up on port ${port}...`));
