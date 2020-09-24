@@ -3,6 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+
 const connectDB = require("./config/db");
 
 const authRouter = require("./routes/auth");
