@@ -12,9 +12,9 @@ const theme = createMuiTheme({
     error: {
       main: red.A400,
     },
-    background: {
-      default: "#fff",
-    },
+  },
+  typography: {
+    fontFamily: "'Rubik', sans-serif",
   },
 });
 

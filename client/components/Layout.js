@@ -1,9 +1,11 @@
 import { Fragment } from "react";
 
+import Navbar from "./Navbar";
+
 const Layout = ({ children }) => {
   return (
     <Fragment>
-      <div className="">Header</div>
+      <Navbar />
       {children}
       <div className="">Footer</div>
     </Fragment>
