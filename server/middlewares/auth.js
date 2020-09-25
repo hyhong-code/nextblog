@@ -11,17 +11,19 @@ module.exports = async (req, res, next) => {
       req.headers.authorization.startsWith("Bearer")
     ) {
       token = req.headers.authorization.startsWith("Bearer").split(" ")[1];
+      console.log("[TOKEN USER]");
     }
 
     // Try extract token from cookies
     if (req.cookies && req.cookies["AUTH_TOKEN"]) {
       token = req.cookies["AUTH_TOKEN"];
+      console.log("[COOKIE USER]");
     }
 
     // Handle token not found
     if (!token) {
       return res.status(401).json({
-        errors: [{ msg: "Invalid credentials." }],
+        errors: [{ msg: "Invalid credentials, please log in." }],
       });
     }
 
@@ -31,7 +33,7 @@ module.exports = async (req, res, next) => {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
       return res.status(401).json({
-        errors: [{ msg: "Invalid credentials." }],
+        errors: [{ msg: "Invalid credentials, please log in." }],
       });
     }
 

@@ -23,6 +23,9 @@ exports.register = async (req, res, next) => {
 
     // Send back a token
     const token = user.genJwtToken();
+    res.cookie("AUTH_TOKEN", token, {
+      maxAge: parseInt(process.env.COOKIE_MAXAGE),
+    });
     res.status(201).json({
       data: { token },
     });
@@ -51,10 +54,23 @@ exports.login = async (req, res, next) => {
 
     // Send back a token
     const token = user.genJwtToken();
+    res.cookie("AUTH_TOKEN", token, {
+      maxAge: parseInt(process.env.COOKIE_MAXAGE),
+    });
     res.status(201).json({
       data: { token },
     });
   } catch (error) {
     console.error("[ERROR: register]", error);
   }
+};
+
+exports.loadUser = (req, res, next) => {
+  res.status(200).json({ data: { user: req.user } });
+};
+
+exports.logout = (req, res, next) => {
+  // Clear the token on cookies
+  res.clearCookie("AUTH_TOKEN");
+  res.status(200).json({ data: { msg: "Logout success." } });
 };
