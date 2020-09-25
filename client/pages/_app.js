@@ -2,6 +2,8 @@ import Head from "next/head";
 import { Fragment, useEffect } from "react";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
 
+import Container from "@material-ui/core/Container";
+
 import Layout from "../components/Layout";
 import theme from "../mui/theme";
 
@@ -22,7 +24,9 @@ const MyApp = ({ Component, pageProps }) => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Layout>
-          <Component {...pageProps} />
+          <Container style={{ paddingTop: "2rem" }}>
+            <Component {...pageProps} />
+          </Container>
         </Layout>
       </ThemeProvider>
     </Fragment>

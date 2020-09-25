@@ -1,9 +1,11 @@
 import { Fragment, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import NextLink from "next/link";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -43,12 +45,29 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            MyBlog
-          </Typography>
-          <Button color="inherit">Login</Button>
+          <NextLink href="/">
+            <Typography
+              component="a"
+              variant="h6"
+              className={classes.title}
+              style={{ cursor: "pointer" }}
+            >
+              MyBlog
+            </Typography>
+          </NextLink>
+          <NextLink href="/login">
+            <Button component="a" color="inherit">
+              Sign in
+            </Button>
+          </NextLink>
+          <NextLink href="/register">
+            <Button component="a" color="inherit">
+              Sign up
+            </Button>
+          </NextLink>
         </Toolbar>
       </AppBar>
+      <Toolbar />
       <SwipeableDrawer
         anchor="left"
         open={drawerOpen}
