@@ -1,0 +1,5 @@
+/* Overwrite NProgress styles */
+#nprogress .bar {
+  background: #fff;
+  z-index: 99999;
+}

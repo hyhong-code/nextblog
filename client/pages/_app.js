@@ -1,11 +1,20 @@
 import Head from "next/head";
 import { Fragment, useEffect } from "react";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import Router from "next/router";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 import Container from "@material-ui/core/Container";
 
 import Layout from "../components/Layout";
 import theme from "../mui/theme";
+import "../styles/app.css";
+
+// Binding events for NProgress
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
