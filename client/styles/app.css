@@ -1,5 +1,26 @@
-/* Overwrite NProgress styles */
+/* Overwrites NProgress styles */
 #nprogress .bar {
-  background: #fff;
-  z-index: 99999;
+  background: #fff !important;
+  z-index: 99999 !important;
+}
+
+/* Overwrites React Toastify styles */
+.Toastify__toast-container {
+  z-index: 99999 !important;
+}
+
+.Toastify__toast--info {
+  background: #2196f3 !important;
+}
+
+.Toastify__toast--success {
+  background: #4caf50 !important;
+}
+
+.Toastify__toast--warning {
+  background: #ff9800 !important;
+}
+
+.Toastify__toast--error {
+  background: #f44336 !important;
 }

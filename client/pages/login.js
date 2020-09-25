@@ -1,4 +1,7 @@
 import { useState } from "react";
+import NextLink from "next/link";
+import axios from "../utils/axios";
+import { toast } from "react-toastify";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -6,6 +9,10 @@ import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { API } from "../config";
 
 const INITIAL_FORMDATA = {
   email: "",
@@ -14,6 +21,7 @@ const INITIAL_FORMDATA = {
 
 const login = () => {
   const [formData, setFormData] = useState(INITIAL_FORMDATA);
+  const [loading, setLoading] = useState(false);
   const { email, password } = formData;
 
   const INPUT_FIELDS = [
@@ -28,9 +36,18 @@ const login = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    setLoading(true);
     try {
-      console.log(formData);
-    } catch (error) {}
+      console.log({ formData });
+
+      const res = await axios.post(`${API}/v1/auth/login`, formData);
+      toast.success("Sign in success.");
+      setFormData(INITIAL_FORMDATA);
+    } catch (error) {
+      console.error("[LOGIN ERROR]", error.response);
+      toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
+    }
+    setLoading(false);
   };
 
   return (
@@ -58,10 +75,17 @@ const login = () => {
               color="primary"
               fullWidth
               type="submit"
-              style={{ marginTop: "1rem" }}
+              style={{ marginTop: "1rem", marginBottom: "0.5rem" }}
+              disabled={loading}
             >
-              Sign in
+              {loading ? <CircularProgress size={24} /> : "Sign in"}
             </Button>
+            <Typography align="center" style={{ fontSize: "0.75rem" }}>
+              Don't own an account?{" "}
+              <NextLink href="/register">
+                <Link style={{ cursor: "pointer" }}>Sign up.</Link>
+              </NextLink>{" "}
+            </Typography>
           </CardContent>
         </Card>
       </Grid>

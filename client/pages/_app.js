@@ -1,8 +1,10 @@
-import Head from "next/head";
 import { Fragment, useEffect } from "react";
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import Head from "next/head";
 import Router from "next/router";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { ToastContainer } from "react-toastify";
 import NProgress from "nprogress";
+import "react-toastify/dist/ReactToastify.css";
 import "nprogress/nprogress.css";
 
 import Container from "@material-ui/core/Container";
@@ -37,6 +39,7 @@ const MyApp = ({ Component, pageProps }) => {
             <Component {...pageProps} />
           </Container>
         </Layout>
+        <ToastContainer bodyStyle={{ fontFamily: "'Rubik', sans-serif" }} />
       </ThemeProvider>
     </Fragment>
   );

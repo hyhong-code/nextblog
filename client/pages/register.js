@@ -1,4 +1,6 @@
 import { useState } from "react";
+import NextLink from "next/link";
+import { toast } from "react-toastify";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -6,8 +8,14 @@ import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import axios from "../utils/axios";
+import { API } from "../config";
 
 const INITIAL_FORMDATA = {
+  name: "",
   email: "",
   password: "",
   passwordConfirm: "",
@@ -15,9 +23,11 @@ const INITIAL_FORMDATA = {
 
 const register = () => {
   const [formData, setFormData] = useState(INITIAL_FORMDATA);
-  const { email, password, passwordConfirm } = formData;
+  const [loading, setLoading] = useState(false);
+  const { name, email, password, passwordConfirm } = formData;
 
   const INPUT_FIELDS = [
+    { label: "Name", name: "name", value: name },
     { label: "Email", name: "email", value: email },
     { label: "Password", name: "password", value: password },
     {
@@ -34,9 +44,18 @@ const register = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    setLoading(true);
     try {
-      console.log(formData);
-    } catch (error) {}
+      console.log({ formData });
+
+      const res = await axios.post(`${API}/v1/auth/register`, formData);
+      toast.success("Sign up success, you are now logged in.");
+      setFormData(INITIAL_FORMDATA);
+    } catch (error) {
+      console.error("[REGISTER ERROR]", error.response);
+      toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
+    }
+    setLoading(false);
   };
 
   return (
@@ -64,10 +83,17 @@ const register = () => {
               color="primary"
               fullWidth
               type="submit"
-              style={{ marginTop: "1rem" }}
+              style={{ marginTop: "1rem", marginBottom: "0.5rem" }}
+              disabled={loading}
             >
-              Sign up
+              {loading ? <CircularProgress size={24} /> : "Sign up"}
             </Button>
+            <Typography align="center" style={{ fontSize: "0.75rem" }}>
+              Already owns an account?{" "}
+              <NextLink href="/login">
+                <Link style={{ cursor: "pointer" }}>Sign in.</Link>
+              </NextLink>{" "}
+            </Typography>
           </CardContent>
         </Card>
       </Grid>
