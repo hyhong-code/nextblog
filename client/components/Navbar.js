@@ -95,9 +95,16 @@ export default function ButtonAppBar() {
                 </NextLink>
               </Fragment>
             ) : (
-              <Button component="a" color="inherit" onClick={handleLogout}>
-                Log out
-              </Button>
+              <Fragment>
+                <NextLink href={user.role === "ADMIN" ? "/admin" : "/user"}>
+                  <Button component="a" color="inherit">
+                    Dashboard
+                  </Button>
+                </NextLink>
+                <Button component="a" color="inherit" onClick={handleLogout}>
+                  Log out
+                </Button>
+              </Fragment>
             )}
           </Toolbar>
         </Container>
@@ -132,9 +139,16 @@ export default function ButtonAppBar() {
             </NextLink>
           </Fragment>
         ) : (
-          <Button component="a" color="inherit" onClick={handleLogout}>
-            Log out
-          </Button>
+          <Fragment>
+            <NextLink href={user.role === "ADMIN" ? "/admin" : "user"}>
+              <Button component="a" color="inherit" onClick={toggleDrawer}>
+                Dashboard
+              </Button>
+            </NextLink>
+            <Button component="a" color="inherit" onClick={handleLogout}>
+              Log out
+            </Button>
+          </Fragment>
         )}
       </SwipeableDrawer>
     </Fragment>
