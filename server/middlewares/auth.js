@@ -6,11 +6,12 @@ module.exports = async (req, res, next) => {
     let token;
 
     // Try extract token from authorization header
+    // For getServerSideProps
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
     ) {
-      token = req.headers.authorization.startsWith("Bearer").split(" ")[1];
+      token = req.headers.authorization.split(" ")[1];
       console.log("[TOKEN USER]");
     }
 

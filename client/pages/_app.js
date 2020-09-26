@@ -9,6 +9,7 @@ import "nprogress/nprogress.css";
 
 import Container from "@material-ui/core/Container";
 
+import AuthProvider from "../context/authContext";
 import Layout from "../components/Layout";
 import theme from "../mui/theme";
 import "../styles/app.css";
@@ -32,15 +33,17 @@ const MyApp = ({ Component, pageProps }) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Layout>
-          <Container style={{ paddingTop: "2rem" }}>
-            <Component {...pageProps} />
-          </Container>
-        </Layout>
-        <ToastContainer bodyStyle={{ fontFamily: "'Rubik', sans-serif" }} />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Layout>
+            <Container style={{ paddingTop: "2rem" }}>
+              <Component {...pageProps} />
+            </Container>
+          </Layout>
+          <ToastContainer bodyStyle={{ fontFamily: "'Rubik', sans-serif" }} />
+        </ThemeProvider>
+      </AuthProvider>
     </Fragment>
   );
 };

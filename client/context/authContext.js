@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 const INITIAL_STATE = {
   user: null,
