@@ -11,10 +11,26 @@ const auth = require("../middlewares/auth");
 const restrictTo = require("../middlewares/restrictTo");
 const validate = require("../middlewares/validate");
 
-const { createCategoryValidators } = require("../utils/validators/category");
+const {
+  createCategoryValidators,
+  updateCategoryValidator,
+} = require("../utils/validators/category");
+
+router
+  .route("/:slug")
+  .get(readCategory)
+  .put(
+    auth,
+    restrictTo("ADMIN"),
+    updateCategoryValidator,
+    validate,
+    updateCategory
+  )
+  .delete(deleteCategory);
 
 router
   .route("/")
+  .get(listCategory)
   .post(
     auth,
     restrictTo("ADMIN"),

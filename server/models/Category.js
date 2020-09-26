@@ -35,4 +35,12 @@ categorySchema.pre("validate", function (next) {
   next();
 });
 
+// Populate user's info upon list and read
+categorySchema.pre(/^find/, function () {
+  this.populate({
+    path: "createdBy",
+    select: "role _id name email username",
+  });
+});
+
 module.exports = mongoose.model("Category", categorySchema);
