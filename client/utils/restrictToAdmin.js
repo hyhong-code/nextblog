@@ -4,7 +4,7 @@ import { API } from "../config";
 
 const restrictToAdmin = async ({ req, res }) => {
   let access = false;
-  console.log(req.headers);
+
   try {
     const adminRes = await axios.get(`${API}/v1/auth/admin`, {
       headers: {

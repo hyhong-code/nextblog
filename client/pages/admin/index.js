@@ -1,9 +1,13 @@
-import React from "react";
+import Typography from "@material-ui/core/Typography";
 
-import restrictToAdmin from "../utils/restrictToAdmin";
+import restrictToAdmin from "../../utils/restrictToAdmin";
 
 const admin = () => {
-  return <h1>ADMIN</h1>;
+  return (
+    <Typography variant="h4" component="h1">
+      Admin Dashboard
+    </Typography>
+  );
 };
 
 export default admin;

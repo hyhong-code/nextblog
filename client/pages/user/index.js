@@ -1,9 +1,13 @@
-import React from "react";
+import Typography from "@material-ui/core/Typography";
 
-import restrictToUser from "../utils/restrictToUser";
+import restrictToUser from "../../utils/restrictToUser";
 
 const user = () => {
-  return <h1>USER</h1>;
+  return (
+    <Typography variant="h4" component="h1">
+      User Dashboard
+    </Typography>
+  );
 };
 
 export default user;
