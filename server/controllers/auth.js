@@ -75,13 +75,13 @@ exports.logout = (req, res, next) => {
   res.status(200).json({ data: { msg: "Logout success." } });
 };
 
-exports.adminRoute = (req, res, next) => {
+exports.adminAccess = (req, res, next) => {
   res.status(200).json({
     data: { access: true },
   });
 };
 
-exports.adminRoute = (req, res, next) => {
+exports.userAccess = (req, res, next) => {
   res.status(200).json({
     data: { access: true },
   });
