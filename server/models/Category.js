@@ -28,7 +28,6 @@ const categorySchema = new mongoose.Schema(
 // Slugify cateogry's name before validation
 categorySchema.pre("validate", function (next) {
   if (!(this.isNew || this.isModified("name"))) {
-    console.log("should slug");
     next();
   }
   this.slug = slugify(this.name);

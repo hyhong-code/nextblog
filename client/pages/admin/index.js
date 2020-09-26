@@ -1,12 +1,25 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import { Fragment } from "react";
 
+import AdminSideTabs from "../../components/AdminSideTabs";
 import restrictToAdmin from "../../utils/restrictToAdmin";
 
 const admin = () => {
   return (
-    <Typography variant="h4" component="h1">
-      Admin Dashboard
-    </Typography>
+    <Fragment>
+      <Typography variant="h4" component="h1">
+        Admin Dashboard
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <AdminSideTabs />
+        </Grid>
+        <Grid item xs={9}>
+          8
+        </Grid>
+      </Grid>
+    </Fragment>
   );
 };
 

@@ -18,7 +18,7 @@ const reducer = (state, action) => {
     case "AUTH_ERROR":
       return { ...state, user: null };
     default:
-      state;
+      return state;
   }
 };
 

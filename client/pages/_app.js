@@ -11,7 +11,7 @@ import Container from "@material-ui/core/Container";
 
 import AuthProvider from "../context/authContext";
 import Layout from "../components/Layout";
-import theme from "../mui/theme";
+import theme from "../styles/theme";
 import "../styles/app.css";
 
 // Binding events for NProgress

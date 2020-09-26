@@ -66,7 +66,7 @@ const register = () => {
     <Grid container>
       <Grid item xs={1} sm={2} md={4} />
       <Grid item xs>
-        <Card>
+        <Card elevation={3}>
           <CardContent component="form" onSubmit={handleSubmit}>
             <Typography variant="h4" component="h1" align="center">
               Sign up
@@ -96,7 +96,7 @@ const register = () => {
               Already owns an account?{" "}
               <NextLink href="/login">
                 <Link style={{ cursor: "pointer" }}>Sign in.</Link>
-              </NextLink>{" "}
+              </NextLink>
             </Typography>
           </CardContent>
         </Card>
