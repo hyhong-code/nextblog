@@ -51,7 +51,7 @@ module.exports = async (req, res, next) => {
     next();
   } catch (error) {
     console.error("[ERROR - auth middleware]", error);
-    return res.status(400).json({
+    return res.status(500).json({
       errors: [{ msg: "Something went wrong, try again later." }],
     });
   }

@@ -4,7 +4,7 @@ const validate = require("../middlewares/validate");
 const {
   registerValidators,
   loginValidators,
-} = require("../utils/validators/Auth");
+} = require("../utils/validators/auth");
 const auth = require("../middlewares/auth");
 const restrictTo = require("../middlewares/restrictTo");
 

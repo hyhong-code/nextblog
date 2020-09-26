@@ -31,6 +31,9 @@ exports.register = async (req, res, next) => {
     });
   } catch (error) {
     console.error("[ERROR: register]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
   }
 };
 
@@ -62,6 +65,9 @@ exports.login = async (req, res, next) => {
     });
   } catch (error) {
     console.error("[ERROR: register]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
   }
 };
 
