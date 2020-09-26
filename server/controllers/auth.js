@@ -74,3 +74,15 @@ exports.logout = (req, res, next) => {
   res.clearCookie("AUTH_TOKEN");
   res.status(200).json({ data: { msg: "Logout success." } });
 };
+
+exports.adminRoute = (req, res, next) => {
+  res.status(200).json({
+    data: { access: true },
+  });
+};
+
+exports.adminRoute = (req, res, next) => {
+  res.status(200).json({
+    data: { access: true },
+  });
+};
