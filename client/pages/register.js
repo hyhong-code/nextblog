@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NextLink from "next/link";
+import Router from "next/router";
 import { toast } from "react-toastify";
 
 import Grid from "@material-ui/core/Grid";
@@ -46,11 +47,10 @@ const register = () => {
     evt.preventDefault();
     setLoading(true);
     try {
-      console.log({ formData });
-
-      const res = await axios.post(`${API}/v1/auth/register`, formData);
+      await axios.post(`${API}/v1/auth/register`, formData);
       toast.success("Sign up success, you are now logged in.");
       setFormData(INITIAL_FORMDATA);
+      Router.push("/");
     } catch (error) {
       console.error("[REGISTER ERROR]", error.response);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));

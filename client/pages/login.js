@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NextLink from "next/link";
+import Router from "next/router";
 import axios from "../utils/axios";
 import { toast } from "react-toastify";
 
@@ -38,11 +39,10 @@ const login = () => {
     evt.preventDefault();
     setLoading(true);
     try {
-      console.log({ formData });
-
-      const res = await axios.post(`${API}/v1/auth/login`, formData);
+      await axios.post(`${API}/v1/auth/login`, formData);
       toast.success("Sign in success.");
       setFormData(INITIAL_FORMDATA);
+      Router.push("/");
     } catch (error) {
       console.error("[LOGIN ERROR]", error.response);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
