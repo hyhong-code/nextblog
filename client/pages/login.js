@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import NextLink from "next/link";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import axios from "../utils/axios";
 import { toast } from "react-toastify";
 
@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import { loadUser, AuthContext } from "../context/authContext";
 import { API } from "../config";
 
 const INITIAL_FORMDATA = {
@@ -21,9 +22,11 @@ const INITIAL_FORMDATA = {
 };
 
 const login = () => {
+  const { dispatch } = useContext(AuthContext);
   const [formData, setFormData] = useState(INITIAL_FORMDATA);
   const [loading, setLoading] = useState(false);
   const { email, password } = formData;
+  const router = useRouter();
 
   const INPUT_FIELDS = [
     { label: "Email", name: "email", value: email },
@@ -42,7 +45,7 @@ const login = () => {
       await axios.post(`${API}/v1/auth/login`, formData);
       toast.success("Sign in success.");
       setFormData(INITIAL_FORMDATA);
-      Router.push("/");
+      await loadUser(dispatch, router);
     } catch (error) {
       console.error("[LOGIN ERROR]", error.response);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));

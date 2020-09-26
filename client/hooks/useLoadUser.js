@@ -1,17 +1,12 @@
 import { useEffect, useContext } from "react";
 
-import { AuthContext } from "../context/authContext";
+import { AuthContext, loadUser } from "../context/authContext";
 
-const useLoadUser = (user) => {
+const useLoadUser = () => {
   const { dispatch } = useContext(AuthContext);
 
   useEffect(() => {
-    if (user) {
-      dispatch({
-        type: "USER_LOADED",
-        payload: user,
-      });
-    }
+    loadUser(dispatch);
   }, []);
 
   return null;
