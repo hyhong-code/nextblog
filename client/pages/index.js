@@ -25,6 +25,7 @@ export const getServerSideProps = async ({ req, res }) => {
   } catch (error) {
     console.error("[AUTH ERROR]", error.response?.data || error);
   }
+
   return {
     props: {
       user,
