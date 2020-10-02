@@ -96,7 +96,9 @@ export default function ButtonAppBar() {
               </Fragment>
             ) : (
               <Fragment>
-                <NextLink href={user.role === "ADMIN" ? "/admin" : "/user"}>
+                <NextLink
+                  href={user.role === "ADMIN" ? "/admin/tags" : "/user"}
+                >
                   <Button component="a" color="inherit">
                     Dashboard
                   </Button>
@@ -140,7 +142,7 @@ export default function ButtonAppBar() {
           </Fragment>
         ) : (
           <Fragment>
-            <NextLink href={user.role === "ADMIN" ? "/admin" : "user"}>
+            <NextLink href={user.role === "ADMIN" ? "/admin/tags" : "user"}>
               <Button component="a" color="inherit" onClick={toggleDrawer}>
                 Dashboard
               </Button>

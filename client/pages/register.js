@@ -12,10 +12,7 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { AuthContext, loadUser } from "../context/authContext";
-import axios from "../utils/axios";
-import { API } from "../config";
-import { route } from "next/dist/next-server/server/router";
+import { AuthContext, loadUser, register } from "../context/authContext";
 
 const INITIAL_FORMDATA = {
   name: "",
@@ -24,7 +21,7 @@ const INITIAL_FORMDATA = {
   passwordConfirm: "",
 };
 
-const register = () => {
+const Register = () => {
   const { dispatch } = useContext(AuthContext);
   const router = useRouter();
   const [formData, setFormData] = useState(INITIAL_FORMDATA);
@@ -51,10 +48,10 @@ const register = () => {
     evt.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${API}/v1/auth/register`, formData);
+      await register(name, email, password);
+      await loadUser(dispatch, router);
       toast.success("Sign up success, you are now logged in.");
       setFormData(INITIAL_FORMDATA);
-      await loadUser(dispatch, router);
     } catch (error) {
       console.error("[REGISTER ERROR]", error.response);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
@@ -106,4 +103,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

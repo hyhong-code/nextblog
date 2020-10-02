@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import axios from "../utils/axios";
 import { toast } from "react-toastify";
 
 import Grid from "@material-ui/core/Grid";
@@ -13,15 +12,14 @@ import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { loadUser, AuthContext } from "../context/authContext";
-import { API } from "../config";
+import { loadUser, login, AuthContext } from "../context/authContext";
 
 const INITIAL_FORMDATA = {
   email: "",
   password: "",
 };
 
-const login = () => {
+const Login = () => {
   const { dispatch } = useContext(AuthContext);
   const [formData, setFormData] = useState(INITIAL_FORMDATA);
   const [loading, setLoading] = useState(false);
@@ -42,10 +40,10 @@ const login = () => {
     evt.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${API}/v1/auth/login`, formData);
+      await login(email, password);
+      await loadUser(dispatch, router);
       toast.success("Sign in success.");
       setFormData(INITIAL_FORMDATA);
-      await loadUser(dispatch, router);
     } catch (error) {
       console.error("[LOGIN ERROR]", error.response);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
@@ -97,4 +95,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

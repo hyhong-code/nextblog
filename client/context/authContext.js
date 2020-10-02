@@ -41,9 +41,28 @@ export const loadUser = async (dispatch, router) => {
     dispatch({ type: "USER_LOADED", payload: user });
 
     if (router) {
-      router.push(user.role === "ADMIN" ? "/admin" : "user");
+      router.push(user.role === "ADMIN" ? "/admin/tags" : "user");
     }
   } catch (error) {
     console.error("[LOADUSER ERROR]", error);
+    throw error;
+  }
+};
+
+export const login = async (email, password) => {
+  try {
+    await axios.post(`${API}/v1/auth/login`, { email, password });
+  } catch (error) {
+    console.error("[LOGIN ERROR]", error);
+    throw error;
+  }
+};
+
+export const register = async (name, email, password) => {
+  try {
+    await axios.post(`${API}/v1/auth/register`, { name, email, password });
+  } catch (error) {
+    console.error("[REGISTER ERROR]", error);
+    throw error;
   }
 };
