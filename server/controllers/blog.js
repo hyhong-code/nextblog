@@ -57,9 +57,51 @@ exports.listBlogs = async (req, res, next) => {
   }
 };
 
+exports.scanBlogs = async (req, res, next) => {
+  try {
+    let { limit, skip } = req.query;
+    limit = limit ? parseInt(limit) : 10;
+    skip = skip ? parseInt(skip) : 0;
+
+    const blogs = await Blog.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const categories = await Category.find();
+    const tags = await Tag.find();
+
+    res.status(200).json({
+      data: {
+        blogs,
+        categories,
+        tags,
+        count: blogs.length,
+      },
+    });
+  } catch (error) {
+    console.error("[SCAN BLOGS ERROR]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
+};
+
 exports.readBlog = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const { slug } = req.params;
+    const blog = await Blog.findOne({ slug });
+    res.status(200).json({
+      data: {
+        blog,
+      },
+    });
+  } catch (error) {
+    console.error("[READ BLOG ERROR]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
 };
 
 exports.updateBlog = async (req, res, next) => {

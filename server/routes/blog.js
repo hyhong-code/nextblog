@@ -8,10 +8,14 @@ const { createBlogValidators } = require("../utils/validators/blog");
 const {
   createBlog,
   listBlogs,
+  scanBlogs,
   readBlog,
   updateBlog,
   deleteBlog,
 } = require("../controllers/blog");
+
+router.route("/scan").get(scanBlogs);
+router.route("/:slug").get(readBlog);
 
 router
   .route("/")
