@@ -112,7 +112,7 @@ const Categories = ({ categories: preCategories = [] }) => {
           color="primary"
           disabled={!name || loading}
         >
-          {loading ? <CircularProgress size={24} /> : "Create"}
+          {loading ? <CircularProgress size={24} /> : "Create Category"}
         </Button>
       </Box>
 
