@@ -95,7 +95,6 @@ blogSchema.pre("save", function (next) {
 
 // Populate tags, categories, and potedBy user info
 blogSchema.pre(/^find/, function () {
-  console.log("ran");
   this.populate({
     path: "tags",
     select: "name slug",

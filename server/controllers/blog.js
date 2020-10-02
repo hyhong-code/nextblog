@@ -1,7 +1,7 @@
 const Blog = require("../models/Blog");
 const Category = require("../models/Category");
 const Tag = require("../models/Tag");
-const { s3UploadImage } = require("../utils/s3");
+const { s3UploadImage, s3DeleteImage } = require("../utils/s3");
 
 exports.createBlog = async (req, res, next) => {
   try {
@@ -106,10 +106,92 @@ exports.readBlog = async (req, res, next) => {
 
 exports.updateBlog = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const { slug } = req.params;
+    const { photo } = req.body;
+
+    // Handle blog not exits
+    let blog = await Blog.findOne({ slug });
+    if (!blog) {
+      return res.status(404).json({
+        errors: [{ msg: "Blog not found." }],
+      });
+    }
+
+    // Handle user not owner of the blog
+    if (blog.postedBy._id.toString() !== req.user._id.toString()) {
+      return res.status(401).json({
+        errors: [{ msg: "User not authorized." }],
+      });
+    }
+
+    // Replace image
+    let uploadRes;
+    if (photo) {
+      if (blog.photo) {
+        await s3DeleteImage(blog.photo.key);
+      }
+      uploadRes = await s3UploadImage(photo);
+    }
+
+    // Set update object
+    const updateObj = { ...req.body };
+    if (uploadRes)
+      updateObj.photo = {
+        url: uploadRes.Location,
+        key: uploadRes.Key,
+      };
+
+    // Update blog
+    Object.entries(updateObj).forEach(([k, v]) => {
+      blog[k] = v;
+    });
+    blog = await blog.save({ validateBeforeSave: true });
+
+    res.status(200).json({
+      data: {
+        blog,
+      },
+    });
+  } catch (error) {
+    console.error("[UPDATE BLOG ERROR]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
 };
 
 exports.deleteBlog = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const { slug } = req.params;
+    let blog = await Blog.findOne({ slug });
+
+    // Handle blog not found
+    if (!blog) {
+      return res.status(404).json({
+        errors: [{ msg: "Blog not found." }],
+      });
+    }
+
+    // Handle user not owner of the blog
+    if (blog.postedBy._id.toString() !== req.user._id.toString()) {
+      return res.status(401).json({
+        errors: [{ msg: "User not authorized." }],
+      });
+    }
+
+    // Delete photo from s3
+    if (blog.photo) {
+      await s3DeleteImage(blog.photo.key);
+    }
+
+    await Blog.findByIdAndDelete(blog._id);
+    res.status(200).json({
+      data: { msg: "Blog is successfully deleted." },
+    });
+  } catch (error) {
+    console.error("[DELETE BLOG ERROR]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
 };

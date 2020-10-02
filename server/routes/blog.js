@@ -15,11 +15,15 @@ const {
 } = require("../controllers/blog");
 
 router.route("/scan").get(scanBlogs);
-router.route("/:slug").get(readBlog);
+router
+  .route("/:slug")
+  .get(readBlog)
+  .delete(auth, deleteBlog)
+  .put(auth, updateBlog);
 
 router
   .route("/")
   .get(listBlogs)
-  .post(auth, restrictTo("ADMIN"), createBlogValidators, validate, createBlog);
+  .post(auth, createBlogValidators, validate, createBlog);
 
 module.exports = router;

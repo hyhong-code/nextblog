@@ -39,3 +39,13 @@ exports.s3UploadImage = async (image) => {
   //  { Location: 'https://tutshare.s3.us-west-2.amazonaws.com/category/37af4ebd-7223-49c6-b7df-56f5f002dd9d',
   //   key: 'category/37af4ebd-7223-49c6-b7df-56f5f002dd9d'}
 };
+
+// Delete a s3 object by given key
+exports.s3DeleteImage = async (key) => {
+  const s3DeleteParams = {
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Key: key,
+  };
+
+  return s3.deleteObject(s3DeleteParams).promise();
+};
