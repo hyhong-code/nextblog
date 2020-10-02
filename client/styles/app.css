@@ -24,3 +24,26 @@
 .Toastify__toast--error {
   background: #f44336 !important;
 }
+
+/* Overwrites React Quill styles */
+.ql-editor {
+  min-height: 10rem;
+}
+
+/* Overwrites Drop zone styles */
+.MuiDropzoneArea-root {
+  min-height: 7.5rem !important;
+  background-color: inherit !important;
+  margin-bottom: 1rem !important;
+}
+
+.MuiDropzoneArea-text {
+  font-size: 1rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.MuiDropzoneArea-icon {
+  width: 30px !important;
+  height: 30px !important;
+}

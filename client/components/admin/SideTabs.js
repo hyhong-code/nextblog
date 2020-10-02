@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
 
 const PATHS = [
   {
+    pathname: "/admin/blogs",
+    label: "Blogs",
+  },
+  {
     pathname: "/admin/categories",
     label: "Categories",
   },

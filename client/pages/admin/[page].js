@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { RadioGroup, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { Fragment } from "react";
 import { useRouter } from "next/router";
@@ -11,11 +11,13 @@ import restrictToAdmin from "../../utils/restrictToAdmin";
 
 import Tags from "../../components/admin/Tags";
 import Categories from "../../components/admin/Categories";
+import Blog from "../../components/admin/Blog";
 
 const Layout = ({ categories, tags }) => {
   const PATH_COMPONENT_MAP = {
     ["/admin/categories"]: <Categories categories={categories} />,
     ["/admin/tags"]: <Tags tags={tags} />,
+    ["/admin/blogs"]: <Blog categories={categories} tags={tags} />,
   };
 
   const router = useRouter();

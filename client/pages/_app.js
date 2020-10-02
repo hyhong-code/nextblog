@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import NProgress from "nprogress";
 import "react-toastify/dist/ReactToastify.css";
 import "nprogress/nprogress.css";
+import "react-quill/dist/quill.snow.css";
 
 import Container from "@material-ui/core/Container";
 
