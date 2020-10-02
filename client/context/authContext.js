@@ -3,6 +3,7 @@ import React, { createContext, useReducer } from "react";
 import axios from "../utils/axios";
 import { API } from "../config";
 
+// Context
 export const AuthContext = createContext();
 
 const INITIAL_STATE = {
@@ -22,6 +23,7 @@ const reducer = (state, action) => {
   }
 };
 
+// Provider
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
@@ -34,6 +36,7 @@ const AuthProvider = ({ children }) => {
 
 export default AuthProvider;
 
+// Actions
 export const loadUser = async (dispatch, router) => {
   try {
     const res = await axios.get(`${API}/v1/auth`);
@@ -45,7 +48,6 @@ export const loadUser = async (dispatch, router) => {
     }
   } catch (error) {
     console.error("[LOADUSER ERROR]", error);
-    throw error;
   }
 };
 

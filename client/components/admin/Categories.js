@@ -13,6 +13,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import axios from "../../utils/axios";
 import { API } from "../../config";
+import { Typography } from "@material-ui/core";
 
 const Categories = ({ categories: preCategories = [] }) => {
   const [categories, setCategories] = useState(preCategories);
@@ -28,6 +29,7 @@ const Categories = ({ categories: preCategories = [] }) => {
       const res = await axios.post(`${API}/v1/categories`, { name });
       setCategories((prev) => [...prev, res.data.data.category]);
       toast.success("Category successfully created.");
+      setName("");
     } catch (error) {
       console.error("[CREATE CATEGORY ERROR]", error);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
@@ -69,6 +71,26 @@ const Categories = ({ categories: preCategories = [] }) => {
 
   return (
     <Fragment>
+      <Typography variant="h5" component="h2" paragraph>
+        Categories
+      </Typography>
+      <Box style={{ marginBottom: "1rem" }}>
+        {categories.map((c) => (
+          <Chip
+            size="medium"
+            color="primary"
+            key={c._id}
+            label={c.name}
+            onDelete={() => handleDelete(c.slug)}
+            style={{ marginRight: 5 }}
+            onClick={() => {
+              setDeleteCategory(c);
+              setUpdateName(c.name);
+            }}
+          />
+        ))}
+      </Box>
+
       <Box
         component="form"
         onSubmit={handleCreate}
@@ -93,20 +115,12 @@ const Categories = ({ categories: preCategories = [] }) => {
           {loading ? <CircularProgress size={24} /> : "Create"}
         </Button>
       </Box>
-      {categories.map((c) => (
-        <Chip
-          key={c._id}
-          label={c.name}
-          onDelete={() => handleDelete(c.slug)}
-          style={{ marginRight: 5 }}
-          onClick={() => {
-            setDeleteCategory(c);
-            setUpdateName(c.name);
-          }}
-        />
-      ))}
 
-      <Dialog open={!!deleteCategory} onClose={() => setDeleteCategory(null)}>
+      <Dialog
+        size="small"
+        open={!!deleteCategory}
+        onClose={() => setDeleteCategory(null)}
+      >
         <DialogTitle>Update {deleteCategory?.name}</DialogTitle>
         <DialogContent>
           <TextField

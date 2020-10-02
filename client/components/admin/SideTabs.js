@@ -11,13 +11,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PATHNAMES = ["/admin/tags", "/admin/categories"];
+const PATHS = [
+  {
+    pathname: "/admin/categories",
+    label: "Categories",
+  },
+  {
+    pathname: "/admin/tags",
+    label: "Tags",
+  },
+];
 
 const SideTabs = () => {
   const classes = useStyles();
   const router = useRouter();
 
-  const value = () => PATHNAMES.findIndex((v) => v === router.asPath);
+  const value = () => PATHS.findIndex((v) => v.pathname === router.asPath);
 
   return (
     <Tabs
@@ -27,13 +36,11 @@ const SideTabs = () => {
       aria-label="Vertical tabs example"
       className={classes.tabs}
     >
-      <NextLink href="/admin/tags">
-        <Tab component="a" label="Dashboard" />
-      </NextLink>
-      <NextLink href="/admin/categories">
-        <Tab component="a" label="Categories" />
-      </NextLink>
-      <Tab label="Item Three" />
+      {PATHS.map((p, idx) => (
+        <NextLink href={p.pathname} key={idx}>
+          <Tab component="a" label={p.label} />
+        </NextLink>
+      ))}
     </Tabs>
   );
 };

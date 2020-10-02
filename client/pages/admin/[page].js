@@ -12,17 +12,17 @@ import restrictToAdmin from "../../utils/restrictToAdmin";
 import Tags from "../../components/admin/Tags";
 import Categories from "../../components/admin/Categories";
 
-const Layout = ({ categories }) => {
+const Layout = ({ categories, tags }) => {
   const PATH_COMPONENT_MAP = {
     ["/admin/categories"]: <Categories categories={categories} />,
-    ["/admin/tags"]: <Tags />,
+    ["/admin/tags"]: <Tags tags={tags} />,
   };
 
   const router = useRouter();
 
   return (
     <Fragment>
-      <Typography variant="h4" component="h1">
+      <Typography variant="h4" component="h1" paragraph>
         Admin Dashboard
       </Typography>
       <Grid container spacing={2}>
@@ -47,13 +47,22 @@ export const getServerSideProps = async ({ req, res }) => {
     const res = await axios.get(`${API}/v1/categories`);
     categories = res.data.data.categories;
   } catch (error) {
-    console.error("[ADMIN CATEGORY CREATE]", error);
+    console.error("[FETCH CATEGORIES]", error);
+  }
+
+  let tags = [];
+  try {
+    const res = await axios.get(`${API}/v1/tags`);
+    tags = res.data.data.tags;
+  } catch (error) {
+    console.error("[FETCH TAGS]", error);
   }
 
   return {
     props: {
       access,
       categories,
+      tags,
     },
   };
 };

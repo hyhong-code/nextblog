@@ -2,9 +2,9 @@ const Tag = require("../models/Tag");
 
 exports.listTags = async (req, res, next) => {
   try {
-    const tag = await Tag.find();
+    const tags = await Tag.find();
     res.status(201).json({
-      data: { tag },
+      data: { tags },
     });
   } catch (error) {
     console.error("[listTags]", error);
