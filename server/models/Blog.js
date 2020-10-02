@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 const stripHTML = require("string-strip-html");
 
+const smartTrim = require("../utils/smartTrim");
+
 const blogSchema = new mongoose.Schema(
   {
     title: {
@@ -87,6 +89,8 @@ blogSchema.pre("save", function (next) {
 
   if (this.isNew || this.isModified("content")) {
     this.metaDesc = stripHTML(this.content.substring(0, 160)).result;
+    this.metaDesc = smartTrim(stripHTML(this.content).result, 160, " ", "...");
+    this.excerpt = smartTrim(stripHTML(this.content).result, 320, " ", "...");
   }
 
   next();

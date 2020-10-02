@@ -16,7 +16,7 @@ connectDB();
 
 // Middlewares
 app.use(morgan("dev"));
-app.use(express.json());
+app.use(express.json({ limit: "10mb", type: "application/json" }));
 app.use(cookieParser());
 if (process.env.NODE_ENV === "development") {
   app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));

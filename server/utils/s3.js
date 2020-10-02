@@ -12,7 +12,7 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_KEY,
 });
 
-const s3 = new AWS.s3();
+const s3 = new AWS.S3();
 
 // Transform image into buffer and upload s3
 exports.s3UploadImage = async (image) => {

@@ -12,15 +12,19 @@ exports.createBlog = async (req, res, next) => {
       updateRes = await s3UploadImage(photo);
     }
 
-    const blog = await Blog.create({
+    const createObj = {
       ...req.body,
       postedBy: req.user.id,
-      photo: {
+    };
+
+    if (updateRes) {
+      createObj.photo = {
         url: updateRes.Location,
         key: updateRes.Key,
-      },
-    });
+      };
+    }
 
+    const blog = await Blog.create(createObj);
     res.status(201).json({
       data: { blog },
     });
