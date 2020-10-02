@@ -1,16 +1,26 @@
 const Blog = require("../models/Blog");
 const Category = require("../models/Category");
 const Tag = require("../models/Tag");
-const stripHtml = require("string-strip-html");
+const { s3UploadImage } = require("../utils/s3");
 
 exports.createBlog = async (req, res, next) => {
   try {
     const { photo } = req.body;
 
+    let updateRes;
     if (photo) {
+      updateRes = await s3UploadImage(photo);
     }
 
-    const blog = await Blog.create({ ...req.body, postedBy: req.user.id });
+    const blog = await Blog.create({
+      ...req.body,
+      postedBy: req.user.id,
+      photo: {
+        url: updateRes.Location,
+        key: updateRes.Key,
+      },
+    });
+
     res.status(201).json({
       data: { blog },
     });
