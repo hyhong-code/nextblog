@@ -21,15 +21,12 @@ const blogSchema = new mongoose.Schema(
       index: true,
     },
     content: {
-      type: {}, // Any type
-      required: true,
-      min: 200,
-      max: 2000000, // 2mb
-    },
-    excerpt: {
       type: String,
-      max: 1000,
+      required: true,
+      minlength: 10,
+      max: 100000,
     },
+    excerpt: { type: String },
     metaTitle: { type: String },
     metaDesc: { type: String },
     photo: {

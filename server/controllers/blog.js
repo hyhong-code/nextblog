@@ -5,7 +5,14 @@ const { s3UploadImage } = require("../utils/s3");
 
 exports.createBlog = async (req, res, next) => {
   try {
-    const { photo } = req.body;
+    const { title, photo } = req.body;
+
+    let blog = await Blog.findOne({ title });
+    if (blog) {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: `Title ${title} is already taken.` }] });
+    }
 
     let updateRes;
     if (photo) {
@@ -24,7 +31,7 @@ exports.createBlog = async (req, res, next) => {
       };
     }
 
-    const blog = await Blog.create(createObj);
+    blog = await Blog.create(createObj);
     res.status(201).json({
       data: { blog },
     });

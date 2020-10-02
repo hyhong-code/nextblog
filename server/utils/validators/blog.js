@@ -4,7 +4,9 @@ exports.createBlogValidators = [
   body("title")
     .isLength({ min: 3, max: 160 })
     .withMessage("Title must be between 3 and 160 characters."),
-  body("content").not().isEmpty().withMessage("Content is required."),
+  body("content")
+    .isLength({ min: 10, max: 100000 })
+    .withMessage("Content is required."),
   body("categories")
     .not()
     .isEmpty()
