@@ -70,7 +70,10 @@ const blogSchema = new mongoose.Schema(
 
 // Generate slug based on title
 blogSchema.pre("validate", function (next) {
-  if (!(this.isNew || this.isModified("title"))) {
+  // if (!(this.isNew || this.isModified("title"))) {
+
+  // Slug shouldn't be updated because of SEO
+  if (!this.isNew) {
     return next();
   }
 

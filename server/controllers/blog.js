@@ -107,7 +107,7 @@ exports.readBlog = async (req, res, next) => {
 exports.updateBlog = async (req, res, next) => {
   try {
     const { slug } = req.params;
-    const { photo } = req.body;
+    const { title, photo } = req.body;
 
     // Handle blog not exits
     let blog = await Blog.findOne({ slug });
@@ -122,6 +122,16 @@ exports.updateBlog = async (req, res, next) => {
       return res.status(401).json({
         errors: [{ msg: "User not authorized." }],
       });
+    }
+
+    // Handle duplicate title
+    if (title) {
+      existingBlog = await Blog.findOne({ title });
+      if (existingBlog && existingBlog._id.toString() !== blog._id.toString()) {
+        return res.status(400).json({
+          errors: [{ msg: `Title "${title}" is already taken.` }],
+        });
+      }
     }
 
     // Replace image
