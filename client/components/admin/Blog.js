@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { DropzoneArea } from "material-ui-dropzone";
-import axios from "../../utils/axios";
-import { API } from "../../config";
+import { toast } from "react-toastify";
 
 // Only import reactQuill on client side
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -13,37 +12,40 @@ import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
+import axios from "../../utils/axios";
+import { API } from "../../config";
 import useRefreshDropzone from "../../hooks/useRefreshDropzone";
 import resizeFile from "../../utils/resizeFile";
-import { Grid, Typography } from "@material-ui/core";
-import { toast } from "react-toastify";
+import { quillModules, quillFormats } from "../../utils/quillOptions";
 
-const INITIAL_STATE = {
+const INITIAL_FORMDATA = {
   title: "",
   content: "",
   photo: null,
 };
 
 const Blog = ({ categories: preCategories, tags: preTags }) => {
-  const INITIAL_CATEGOREIS = preCategories.reduce((acc, cur) => {
+  const setInitialCategories = preCategories.reduce((acc, cur) => {
     acc[cur._id] = false;
     return acc;
   }, {});
 
-  const INITIAL_TAGS = preTags.reduce((acc, cur) => {
+  const setInitialTags = preTags.reduce((acc, cur) => {
     acc[cur._id] = false;
     return acc;
   }, {});
 
   const { show, refresh } = useRefreshDropzone();
-  const [formData, setFormData] = useState(INITIAL_STATE);
+  const [formData, setFormData] = useState(INITIAL_FORMDATA);
   const [loading, setLoading] = useState(false);
   const { title, content } = formData;
   const [selectedCategories, setSelectedCategories] = useState(
-    INITIAL_CATEGOREIS
+    setInitialCategories
   );
-  const [selectedTags, setSelectedTags] = useState(INITIAL_TAGS);
+  const [selectedTags, setSelectedTags] = useState(setInitialTags);
 
   const handleCategoriesChange = (id) => {
     setSelectedCategories((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -98,10 +100,10 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
         ),
       });
       refresh();
-      setSelectedCategories(INITIAL_CATEGOREIS);
-      setSelectedTags(INITIAL_TAGS);
-      setFormData(INITIAL_STATE);
-      toast.success(`${res.data.data.blog.title} is successfully created.`);
+      setSelectedCategories(setInitialCategories);
+      setSelectedTags(setInitialTags);
+      setFormData(INITIAL_FORMDATA);
+      toast.success(`${res.data.data.blog.title} is successfully published.`);
     } catch (error) {
       console.error("[CREATE BLOG ERROR]", error.response);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
@@ -125,18 +127,19 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
           {show && (
             <DropzoneArea
               filesLimit={1}
-              dropzoneText="Drop or click to add your image."
+              dropzoneText="Drop or click to add featured image."
               onChange={handleFile}
               acceptedFiles={["image/*"]}
             />
           )}
           <ReactQuill
-            modules={Blog.modules}
-            formats={Blog.formats}
+            modules={quillModules}
+            formats={quillFormats}
             value={content}
             onChange={(v) => setFormData((prev) => ({ ...prev, content: v }))}
           />
         </Grid>
+
         <Grid item xs={4}>
           <Typography>Select Categories:</Typography>
           <Box
@@ -162,6 +165,7 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
               />
             ))}
           </Box>
+
           <Typography>Select Tags:</Typography>
           <Box style={{ maxHeight: "15rem", overflowY: "scroll" }}>
             {preTags.map((t) => (
@@ -189,39 +193,10 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
         style={{ marginTop: "1rem" }}
         disabled={!(title && content) || loading}
       >
-        {loading ? <CircularProgress size={24} /> : "Submit"}
+        {loading ? <CircularProgress size={24} /> : "Publish"}
       </Button>
     </Box>
   );
 };
 
 export default Blog;
-
-Blog.modules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }, { header: [3, 4, 5, 6] }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["link", "image", "video"],
-    ["clean"],
-    ["code-block"],
-  ],
-};
-
-Blog.formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "link",
-  "image",
-  "video",
-  "code-block",
-];

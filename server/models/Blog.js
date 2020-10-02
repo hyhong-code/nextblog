@@ -21,10 +21,10 @@ const blogSchema = new mongoose.Schema(
       index: true,
     },
     content: {
-      type: String,
+      type: {}, // Any type
       required: true,
-      minlength: 10,
-      max: 100000,
+      min: 200,
+      max: 2000000, // 2mbs
     },
     excerpt: { type: String },
     metaTitle: { type: String },
