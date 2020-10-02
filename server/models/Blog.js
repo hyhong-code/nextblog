@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const stripHTML = require("string-strip-html");
 
 const blogSchema = new mongoose.Schema(
   {
@@ -68,13 +69,44 @@ const blogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Create slug based on title
+// Generate slug based on title
 blogSchema.pre("validate", function (next) {
   if (!(this.isNew || this.isModified("title"))) {
     return next();
   }
-  this.slug = slugify(this.title);
+
+  this.slug = slugify(this.title).toLowerCase();
   next();
+});
+
+// Genetate meta title and meta description
+blogSchema.pre("save", function (next) {
+  if (this.isNew || this.isModified("title")) {
+    this.metaTitle = `${this.title} | ${process.env.APP_NAME}`;
+  }
+
+  if (this.isNew || this.isModified("content")) {
+    this.metaDesc = stripHTML(this.content.substring(0, 160)).result;
+  }
+
+  next();
+});
+
+// Populate tags, categories, and potedBy user info
+blogSchema.pre(/^find/, function () {
+  console.log("ran");
+  this.populate({
+    path: "tags",
+    select: "name slug",
+  })
+    .populate({
+      path: "categories",
+      select: "name slug",
+    })
+    .populate({
+      path: "postedBy",
+      select: "name email username profile createdAt role",
+    });
 });
 
 module.exports = mongoose.model("Blog", blogSchema);

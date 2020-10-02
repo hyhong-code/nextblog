@@ -30,7 +30,7 @@ categorySchema.pre("validate", function (next) {
   if (!(this.isNew || this.isModified("name"))) {
     next();
   }
-  this.slug = slugify(this.name);
+  this.slug = slugify(this.name).toLowerCase();
   next();
 });
 
