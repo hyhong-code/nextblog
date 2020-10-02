@@ -1,8 +1,6 @@
 import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 
-import { Typography } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -11,17 +9,15 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import axios from "../../../utils/axios";
-import { API } from "../../../config";
-import AdminSideTabs from "../../../components/AdminSideTabs";
+import axios from "../../utils/axios";
+import { API } from "../../config";
 
-const create = ({ categories: preCategories }) => {
+const Categories = ({ categories: preCategories = [] }) => {
+  const [categories, setCategories] = useState(preCategories);
   const [name, setName] = useState("");
   const [updateName, setUpdateName] = useState("");
-  const [categories, setCategories] = useState(preCategories);
   const [loading, setLoading] = useState(false);
   const [deleteCategory, setDeleteCategory] = useState(null);
 
@@ -73,52 +69,43 @@ const create = ({ categories: preCategories }) => {
 
   return (
     <Fragment>
-      <Typography variant="h4" component="h1">
-        Admin Dashboard
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <AdminSideTabs />
-        </Grid>
-        <Grid item xs={9}>
-          <Box
-            component="form"
-            onSubmit={handleCreate}
-            style={{ marginBottom: "1rem" }}
-          >
-            <TextField
-              id={`admin-create-${name}`}
-              label="Category Name"
-              name="name"
-              value={name}
-              onChange={(evt) => setName(evt.target.value)}
-              fullWidth
-              disabled={loading}
-              style={{ marginBottom: "0.5rem" }}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={!name || loading}
-            >
-              {loading ? <CircularProgress size={24} /> : "Create"}
-            </Button>
-          </Box>
-          {categories.map((c) => (
-            <Chip
-              key={c._id}
-              label={c.name}
-              onDelete={() => handleDelete(c.slug)}
-              style={{ marginRight: 5 }}
-              onClick={() => {
-                setDeleteCategory(c);
-                setUpdateName(c.name);
-              }}
-            />
-          ))}
-        </Grid>
-      </Grid>
+      <Box
+        component="form"
+        onSubmit={handleCreate}
+        style={{ marginBottom: "1rem" }}
+      >
+        <TextField
+          id={`admin-create-${name}`}
+          label="Category Name"
+          name="name"
+          value={name}
+          onChange={(evt) => setName(evt.target.value)}
+          fullWidth
+          disabled={loading}
+          style={{ marginBottom: "0.5rem" }}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!name || loading}
+        >
+          {loading ? <CircularProgress size={24} /> : "Create"}
+        </Button>
+      </Box>
+      {categories.map((c) => (
+        <Chip
+          key={c._id}
+          label={c.name}
+          onDelete={() => handleDelete(c.slug)}
+          style={{ marginRight: 5 }}
+          onClick={() => {
+            setDeleteCategory(c);
+            setUpdateName(c.name);
+          }}
+        />
+      ))}
+
       <Dialog open={!!deleteCategory} onClose={() => setDeleteCategory(null)}>
         <DialogTitle>Update {deleteCategory?.name}</DialogTitle>
         <DialogContent>
@@ -158,19 +145,4 @@ const create = ({ categories: preCategories }) => {
   );
 };
 
-export default create;
-
-export const getStaticProps = async () => {
-  let categories = [];
-  try {
-    const res = await axios.get(`${API}/v1/categories`);
-    categories = res.data.data.categories;
-  } catch (error) {
-    console.error("[ADMIN CATEGORY CREATE]", error);
-  }
-
-  return {
-    props: { categories },
-    revalidate: 1,
-  };
-};
+export default Categories;

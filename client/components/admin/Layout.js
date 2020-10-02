@@ -2,10 +2,10 @@ import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { Fragment } from "react";
 
-import AdminSideTabs from "../../components/AdminSideTabs";
+import SideTabs from "./SideTabs";
 import restrictToAdmin from "../../utils/restrictToAdmin";
 
-const admin = () => {
+const Layout = ({ children }) => {
   return (
     <Fragment>
       <Typography variant="h4" component="h1">
@@ -13,17 +13,17 @@ const admin = () => {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <AdminSideTabs />
+          <SideTabs />
         </Grid>
         <Grid item xs={9}>
-          8
+          {children}
         </Grid>
       </Grid>
     </Fragment>
   );
 };
 
-export default admin;
+export default Layout;
 
 export const getServerSideProps = async ({ req, res }) => {
   const access = await restrictToAdmin({ req, res });
