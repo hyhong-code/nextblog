@@ -71,12 +71,14 @@ exports.scanBlogs = async (req, res, next) => {
     const categories = await Category.find();
     const tags = await Tag.find();
 
+    const count = await Blog.countDocuments();
+
     res.status(200).json({
       data: {
         blogs,
         categories,
         tags,
-        count: blogs.length,
+        count,
       },
     });
   } catch (error) {
