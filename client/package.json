@@ -13,6 +13,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.20.0",
     "date-fns": "^2.16.1",
+    "html-react-parser": "^0.14.0",
     "material-ui-dropzone": "^3.5.0",
     "next": "9.5.3",
     "nprogress": "^0.2.0",

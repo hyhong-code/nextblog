@@ -4,8 +4,8 @@ module.exports = (file) =>
   new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      640,
-      480,
+      800,
+      600,
       "JPEG",
       100,
       0,
