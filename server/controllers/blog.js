@@ -106,6 +106,39 @@ exports.readBlog = async (req, res, next) => {
   }
 };
 
+exports.listSimilarBlogs = async (req, res, next) => {
+  try {
+    const { id, categories } = req.body;
+    let { limit } = req.query;
+    limit = limit ? parseInt(limit) : 3;
+
+    let blog = await Blog.findById(id);
+
+    // Handle blog not found
+    if (!blog) {
+      return res.status(404).json({
+        errors: [{ msg: "Blog not found." }],
+      });
+    }
+
+    blogs = await Blog.find({
+      _id: { $ne: id },
+      categories: { $in: categories },
+    })
+      .sort({ createdAt: -1 })
+      .limit(limit);
+
+    res.status(200).json({
+      data: { blogs },
+    });
+  } catch (error) {
+    console.error("[LIST SIMILAR BLOGS ERROR]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
+};
+
 exports.updateBlog = async (req, res, next) => {
   try {
     const { slug } = req.params;
