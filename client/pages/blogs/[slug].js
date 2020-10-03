@@ -68,9 +68,11 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
 
         <Typography variant="subtitle1" component="h2" gutterBottom>
           {blog.postedBy?.name} |{" "}
-          {formatDistance(new Date(blog.createdAt), new Date(), {
-            addSuffix: true,
-          })}
+          {blog.createdAt
+            ? formatDistance(new Date(blog.createdAt), new Date(), {
+                addSuffix: true,
+              })
+            : ""}
         </Typography>
 
         <Box>
@@ -101,7 +103,7 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
           ))}
         </Box>
 
-        <Box>{parse(blog.content)}</Box>
+        {blog.content && <Box>{parse(blog.content)}</Box>}
 
         <Divider style={{ margin: "1rem 0" }} />
 

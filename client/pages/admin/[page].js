@@ -18,7 +18,9 @@ const Layout = ({ categories, tags, blogs }) => {
     ["/admin/categories"]: <Categories categories={categories} />,
     ["/admin/tags"]: <Tags tags={tags} />,
     ["/admin/blogs-create"]: <Blog categories={categories} tags={tags} />,
-    ["/admin/blogs-manage"]: <ManageBlog blogs={blogs} />,
+    ["/admin/blogs-manage"]: (
+      <ManageBlog blogs={blogs} categories={categories} tags={tags} />
+    ),
   };
 
   const router = useRouter();

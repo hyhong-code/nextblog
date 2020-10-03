@@ -23,7 +23,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 
-const ManageBlogs = ({ blogs: preBlogs }) => {
+const ManageBlogs = ({ blogs: preBlogs, categories, tags }) => {
   const [blogs, setBlogs] = useState(preBlogs);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -60,7 +60,7 @@ const ManageBlogs = ({ blogs: preBlogs }) => {
     setTimeout(() => {
       setSelectedBlog(false);
       setAnchorEl(null);
-    }, 250);
+    }, 100);
   };
 
   return (
@@ -111,7 +111,9 @@ const ManageBlogs = ({ blogs: preBlogs }) => {
               open={selectedBlog?._id === b._id}
               onClose={handleMenuClose}
             >
-              <MenuItem>Update Blog</MenuItem>
+              <NextLink href={`/updateblog/${b.slug}`}>
+                <MenuItem component="a">Update Blog</MenuItem>
+              </NextLink>
               <MenuItem onClick={() => setDeleteShow(true)}>
                 Delete Blog
               </MenuItem>
