@@ -14,7 +14,7 @@ const BlogCard = ({ blog }) => {
     <Paper
       elevation={3}
       component="article"
-      style={{ padding: "2rem", marginBottom: "1rem" }}
+      style={{ padding: "1.5rem 2rem", marginBottom: "2rem" }}
     >
       {/* Blog Title */}
       <header>
@@ -43,7 +43,7 @@ const BlogCard = ({ blog }) => {
         {/* Categories */}
         <Box>
           {blog.categories.map((c) => (
-            <NextLink href={`/categories/${c.name}`}>
+            <NextLink key={c.slug} href={`/categories/${c.name}`}>
               <Chip
                 label={c.name}
                 component="a"
@@ -57,7 +57,7 @@ const BlogCard = ({ blog }) => {
         {/* Tags */}
         <Box style={{ margin: "0.5rem 0 1rem" }}>
           {blog.tags.map((t) => (
-            <NextLink href={`/tags/${t.name}`}>
+            <NextLink key={t.slug} href={`/tags/${t.name}`}>
               <Chip
                 label={`#${t.name}`}
                 component="a"
@@ -93,7 +93,7 @@ const BlogCard = ({ blog }) => {
             </Typography>
             <NextLink href={`/blogs/${blog.slug}`}>
               {/* Read More Action */}
-              <Button component="a" color="primary">
+              <Button component="a" color="primary" variant="contained">
                 Read More
               </Button>
             </NextLink>

@@ -113,7 +113,7 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         <Grid item xs={8}>
           <TextField
             id="blog-input-title"
@@ -147,6 +147,7 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
               maxHeight: "15rem",
               overflowY: "scroll",
               marginBottom: "1rem",
+              paddingLeft: "1rem",
             }}
           >
             {preCategories.map((c) => (
@@ -167,7 +168,13 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
           </Box>
 
           <Typography>Select Tags:</Typography>
-          <Box style={{ maxHeight: "15rem", overflowY: "scroll" }}>
+          <Box
+            style={{
+              maxHeight: "15rem",
+              overflowY: "scroll",
+              paddingLeft: "1rem",
+            }}
+          >
             {preTags.map((t) => (
               <FormControlLabel
                 style={{ display: "block" }}
