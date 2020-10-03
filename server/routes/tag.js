@@ -18,7 +18,7 @@ router
 
 router
   .route("/")
-  .post(auth, createTagValidator, validate, createTag)
+  .post(auth, restrictTo("ADMIN"), createTagValidator, validate, createTag)
   .get(listTags);
 
 module.exports = router;

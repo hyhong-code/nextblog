@@ -1,0 +1,107 @@
+import NextLink from "next/link";
+import Image from "react-image-fade-in";
+import { formatDistance } from "date-fns";
+
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import Chip from "@material-ui/core/Chip";
+import Box from "@material-ui/core/Box";
+
+const BlogCard = ({ blog }) => {
+  return (
+    <Paper
+      elevation={3}
+      component="article"
+      style={{ padding: "2rem", marginBottom: "1rem" }}
+    >
+      {/* Blog Title */}
+      <header>
+        <NextLink href={`/blogs/${blog.slug}`}>
+          <Typography
+            component="a"
+            variant="h4"
+            component="h2"
+            style={{ cursor: "pointer" }}
+            gutterBottom
+          >
+            {blog.title}
+          </Typography>
+        </NextLink>
+      </header>
+      <section>
+        {/* Created by and date */}
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+          Published by {blog.postedBy.name} |{" "}
+          {formatDistance(new Date(blog.updatedAt), new Date(), {
+            addSuffix: true,
+          })}
+        </Typography>
+      </section>
+      <section>
+        {/* Categories */}
+        <Box>
+          {blog.categories.map((c) => (
+            <NextLink href={`/categories/${c.name}`}>
+              <Chip
+                label={c.name}
+                component="a"
+                color="primary"
+                style={{ marginRight: "0.5rem" }}
+                size="small"
+              />
+            </NextLink>
+          ))}
+        </Box>
+        {/* Tags */}
+        <Box style={{ margin: "0.5rem 0 1rem" }}>
+          {blog.tags.map((t) => (
+            <NextLink href={`/tags/${t.name}`}>
+              <Chip
+                label={`#${t.name}`}
+                component="a"
+                variant="outlined"
+                color="secondary"
+                style={{ marginRight: "0.5rem" }}
+                size="small"
+              />
+            </NextLink>
+          ))}
+        </Box>
+      </section>
+      <Grid container spacing={3}>
+        <Grid item xs={4}>
+          {/* Image */}
+          <Image
+            transition={1000}
+            src={blog.photo?.url}
+            alt={blog.title}
+            style={{
+              height: 150,
+              width: "100%",
+              objectFit: "cover",
+              borderRadius: 5,
+            }}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          <section>
+            {/* Excerpt */}
+            <Typography variant="body1" gutterBottom>
+              {blog.excerpt}
+            </Typography>
+            <NextLink href={`/blogs/${blog.slug}`}>
+              {/* Read More Action */}
+              <Button component="a" color="primary">
+                Read More
+              </Button>
+            </NextLink>
+          </section>
+        </Grid>
+      </Grid>
+    </Paper>
+  );
+};
+
+export default BlogCard;

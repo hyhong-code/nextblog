@@ -80,6 +80,13 @@ export default function ButtonAppBar() {
               </Typography>
             </NextLink>
 
+            {/* Blogs */}
+            <NextLink href="/blogs">
+              <Button component="a" color="inherit">
+                Blogs
+              </Button>
+            </NextLink>
+
             {/* Links */}
             {!user ? (
               <Fragment>
@@ -125,6 +132,13 @@ export default function ButtonAppBar() {
         <IconButton style={{ alignSelf: "flex-end" }} onClick={toggleDrawer}>
           <ClearRoundedIcon />
         </IconButton>
+
+        {/* Blogs */}
+        <NextLink href="/blogs">
+          <Button component="a" color="inherit">
+            Blogs
+          </Button>
+        </NextLink>
 
         {/* Links */}
         {!user ? (

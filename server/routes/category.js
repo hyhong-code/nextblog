@@ -26,7 +26,7 @@ router
     validate,
     updateCategory
   )
-  .delete(deleteCategory);
+  .delete(auth, restrictTo("ADMIN"), deleteCategory);
 
 router
   .route("/")
