@@ -72,7 +72,7 @@ const Categories = ({ categories: preCategories = [] }) => {
   return (
     <Fragment>
       <Typography variant="h5" component="h2" paragraph>
-        Categories
+        Mangage Categories
       </Typography>
       <Box style={{ marginBottom: "1rem" }}>
         {categories.map((c) => (

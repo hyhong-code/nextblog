@@ -43,81 +43,79 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
     <Fragment>
       {head()}
 
-      {blog.photo && (
-        <Fragment>
-          <ImageFadeIn
-            transition={1000}
-            src={blog.photo?.url}
-            alt={blog.title}
-            style={{
-              width: "100%",
-              height: 250,
-              objectFit: "cover",
-              borderRadius: 5,
-              marginBottom: "1rem",
-            }}
-          />
+      <Fragment>
+        <ImageFadeIn
+          transition={1000}
+          src={blog.photo?.url}
+          alt={blog.title}
+          style={{
+            width: "100%",
+            height: 250,
+            objectFit: "cover",
+            borderRadius: 5,
+            marginBottom: "1rem",
+          }}
+        />
 
-          <Typography
-            variant="h3"
-            component="h4"
-            gutterBottom
-            style={{ fontWeight: 500 }}
-          >
-            {blog.title}
-          </Typography>
+        <Typography
+          variant="h3"
+          component="h4"
+          gutterBottom
+          style={{ fontWeight: 500 }}
+        >
+          {blog.title}
+        </Typography>
 
-          <Typography variant="subtitle1" component="h2" gutterBottom>
-            {blog.postedBy?.name} |{" "}
-            {formatDistance(new Date(blog.createdAt), new Date(), {
-              addSuffix: true,
-            })}
-          </Typography>
+        <Typography variant="subtitle1" component="h2" gutterBottom>
+          {blog.postedBy?.name} |{" "}
+          {formatDistance(new Date(blog.createdAt), new Date(), {
+            addSuffix: true,
+          })}
+        </Typography>
 
-          <Box>
-            {blog.categories?.map((c) => (
-              <NextLink key={c.slug} href={`/categories/${c.name}`}>
-                <Chip
-                  label={c.name}
-                  component="a"
-                  color="primary"
-                  style={{ marginRight: "0.5rem" }}
-                />
-              </NextLink>
-            ))}
-          </Box>
+        <Box>
+          {blog.categories?.map((c) => (
+            <NextLink key={c.slug} href={`/categories/${c.name}`}>
+              <Chip
+                label={c.name}
+                component="a"
+                color="primary"
+                style={{ marginRight: "0.5rem" }}
+              />
+            </NextLink>
+          ))}
+        </Box>
 
-          <Box style={{ margin: "0.5rem 0 1rem" }}>
-            {blog.tags?.map((t) => (
-              <NextLink key={t.slug} href={`/tags/${t.name}`}>
-                <Chip
-                  label={`#${t.name}`}
-                  component="a"
-                  variant="outlined"
-                  color="secondary"
-                  style={{ marginRight: "0.5rem" }}
-                  size="small"
-                />
-              </NextLink>
-            ))}
-          </Box>
+        <Box style={{ margin: "0.5rem 0 1rem" }}>
+          {blog.tags?.map((t) => (
+            <NextLink key={t.slug} href={`/tags/${t.name}`}>
+              <Chip
+                label={`#${t.name}`}
+                component="a"
+                variant="outlined"
+                color="secondary"
+                style={{ marginRight: "0.5rem" }}
+                size="small"
+              />
+            </NextLink>
+          ))}
+        </Box>
 
-          <Box>{parse(blog.content)}</Box>
+        <Box>{parse(blog.content)}</Box>
 
-          <Divider style={{ margin: "1rem 0" }} />
+        <Divider style={{ margin: "1rem 0" }} />
 
-          <Typography align="center" variant="h5" paragraph>
-            Similar Blogs
-          </Typography>
-          <Grid container spacing={2}>
-            {similarBlogs.map((b) => (
-              <Grid item xs={4} key={b._id}>
-                <SimilarCard blog={b} />
-              </Grid>
-            ))}
-          </Grid>
-        </Fragment>
-      )}
+        <Typography align="center" variant="h5" paragraph>
+          Similar Blogs
+        </Typography>
+        <Grid container spacing={2}>
+          {similarBlogs.map((b) => (
+            <Grid item xs={4} key={b._id}>
+              <SimilarCard blog={b} />
+            </Grid>
+          ))}
+        </Grid>
+      </Fragment>
     </Fragment>
   );
 };

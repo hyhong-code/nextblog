@@ -57,6 +57,20 @@ exports.listBlogs = async (req, res, next) => {
   }
 };
 
+exports.listUserBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find({ postedBy: req.user._id });
+    res.status(200).json({
+      data: { blogs },
+    });
+  } catch (error) {
+    console.error("[LIST USER BLOG]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
+};
+
 exports.scanBlogs = async (req, res, next) => {
   try {
     let { limit, skip } = req.query;
@@ -153,7 +167,10 @@ exports.updateBlog = async (req, res, next) => {
     }
 
     // Handle user not owner of the blog
-    if (blog.postedBy._id.toString() !== req.user._id.toString()) {
+    if (
+      blog.postedBy._id.toString() !== req.user._id.toString() &&
+      user.role !== "ADMIN"
+    ) {
       return res.status(401).json({
         errors: [{ msg: "User not authorized." }],
       });
@@ -218,7 +235,10 @@ exports.deleteBlog = async (req, res, next) => {
     }
 
     // Handle user not owner of the blog
-    if (blog.postedBy._id.toString() !== req.user._id.toString()) {
+    if (
+      blog.postedBy._id.toString() !== req.user._id.toString() &&
+      user.role !== "ADMIN"
+    ) {
       return res.status(401).json({
         errors: [{ msg: "User not authorized." }],
       });

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import dynamic from "next/dynamic";
 import { DropzoneArea } from "material-ui-dropzone";
 import { toast } from "react-toastify";
@@ -112,97 +112,102 @@ const Blog = ({ categories: preCategories, tags: preTags }) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <TextField
-            id="blog-input-title"
-            label="Title"
-            fullWidth
-            name="title"
-            value={title}
-            onChange={handleChange}
-            style={{ marginBottom: "1rem" }}
-          />
-          {show && (
-            <DropzoneArea
-              filesLimit={1}
-              dropzoneText="Drop or click to add featured image."
-              onChange={handleFile}
-              acceptedFiles={["image/*"]}
+    <Fragment>
+      <Typography variant="h5" component="h2" paragraph>
+        Create A New Blog
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <TextField
+              id="blog-input-title"
+              label="Title"
+              fullWidth
+              name="title"
+              value={title}
+              onChange={handleChange}
+              style={{ marginBottom: "1rem" }}
             />
-          )}
-          <ReactQuill
-            modules={quillModules}
-            formats={quillFormats}
-            value={content}
-            onChange={(v) => setFormData((prev) => ({ ...prev, content: v }))}
-          />
-        </Grid>
-
-        <Grid item xs={4}>
-          <Typography>Select Categories:</Typography>
-          <Box
-            style={{
-              maxHeight: "15rem",
-              overflowY: "scroll",
-              marginBottom: "1rem",
-              paddingLeft: "1rem",
-            }}
-          >
-            {preCategories.map((c) => (
-              <FormControlLabel
-                style={{ display: "block" }}
-                key={c._id}
-                control={
-                  <Checkbox
-                    checked={selectedCategories[c._id]}
-                    onChange={() => handleCategoriesChange(c._id)}
-                    name={c.name}
-                    color="primary"
-                  />
-                }
-                label={c.name}
+            {show && (
+              <DropzoneArea
+                filesLimit={1}
+                dropzoneText="Drop or click to add featured image."
+                onChange={handleFile}
+                acceptedFiles={["image/*"]}
               />
-            ))}
-          </Box>
+            )}
+            <ReactQuill
+              modules={quillModules}
+              formats={quillFormats}
+              value={content}
+              onChange={(v) => setFormData((prev) => ({ ...prev, content: v }))}
+            />
+          </Grid>
 
-          <Typography>Select Tags:</Typography>
-          <Box
-            style={{
-              maxHeight: "15rem",
-              overflowY: "scroll",
-              paddingLeft: "1rem",
-            }}
-          >
-            {preTags.map((t) => (
-              <FormControlLabel
-                style={{ display: "block" }}
-                key={t._id}
-                control={
-                  <Checkbox
-                    checked={selectedTags[t._id]}
-                    onChange={() => handleTagsChange(t._id)}
-                    name={t.name}
-                    color="secondary"
-                  />
-                }
-                label={`#${t.name}`}
-              />
-            ))}
-          </Box>
+          <Grid item xs={4}>
+            <Typography>Select Categories:</Typography>
+            <Box
+              style={{
+                maxHeight: "15rem",
+                overflowY: "scroll",
+                marginBottom: "1rem",
+                paddingLeft: "1rem",
+              }}
+            >
+              {preCategories.map((c) => (
+                <FormControlLabel
+                  style={{ display: "block" }}
+                  key={c._id}
+                  control={
+                    <Checkbox
+                      checked={selectedCategories[c._id]}
+                      onChange={() => handleCategoriesChange(c._id)}
+                      name={c.name}
+                      color="primary"
+                    />
+                  }
+                  label={c.name}
+                />
+              ))}
+            </Box>
+
+            <Typography>Select Tags:</Typography>
+            <Box
+              style={{
+                maxHeight: "15rem",
+                overflowY: "scroll",
+                paddingLeft: "1rem",
+              }}
+            >
+              {preTags.map((t) => (
+                <FormControlLabel
+                  style={{ display: "block" }}
+                  key={t._id}
+                  control={
+                    <Checkbox
+                      checked={selectedTags[t._id]}
+                      onChange={() => handleTagsChange(t._id)}
+                      name={t.name}
+                      color="secondary"
+                    />
+                  }
+                  label={`#${t.name}`}
+                />
+              ))}
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-      <Button
-        variant="contained"
-        color="primary"
-        type="submit"
-        style={{ marginTop: "1rem" }}
-        disabled={!(title && content) || loading}
-      >
-        {loading ? <CircularProgress size={24} /> : "Publish"}
-      </Button>
-    </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          style={{ marginTop: "1rem" }}
+          disabled={!(title && content) || loading}
+        >
+          {loading ? <CircularProgress size={24} /> : "Publish"}
+        </Button>
+      </Box>
+    </Fragment>
   );
 };
 

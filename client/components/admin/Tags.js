@@ -48,7 +48,7 @@ const Tags = ({ tags: preTags }) => {
   return (
     <Fragment>
       <Typography variant="h5" component="h2" paragraph>
-        Categories
+        Mangage Tags
       </Typography>
       <Box style={{ marginBottom: "1rem" }}>
         {tags.map((t) => (

@@ -13,10 +13,12 @@ const {
   updateBlog,
   deleteBlog,
   listSimilarBlogs,
+  listUserBlogs,
 } = require("../controllers/blog");
 
 router.route("/scan").get(scanBlogs);
 router.route("/similar").post(listSimilarBlogs);
+router.route("/me").post(auth, listUserBlogs);
 router
   .route("/:slug")
   .get(readBlog)

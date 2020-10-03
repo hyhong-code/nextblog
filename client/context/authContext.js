@@ -44,7 +44,7 @@ export const loadUser = async (dispatch, router) => {
     dispatch({ type: "USER_LOADED", payload: user });
 
     if (router) {
-      router.push(user.role === "ADMIN" ? "/admin/tags" : "user");
+      router.push(user.role === "ADMIN" ? "/admin/blogs-manage" : "user");
     }
   } catch (error) {
     console.error("[LOADUSER ERROR]", error);
