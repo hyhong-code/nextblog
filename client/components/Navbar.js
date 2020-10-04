@@ -1,6 +1,8 @@
 import { Fragment, useState, useContext } from "react";
 import { makeStyles, fade } from "@material-ui/core/styles";
 import NextLink from "next/link";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -11,19 +13,19 @@ import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import InputBase from "@material-ui/core/InputBase";
-
 import SearchIcon from "@material-ui/icons/Search";
+import MenuIcon from "@material-ui/icons/Menu";
+import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 
 import axios from "../utils/axios";
 import { API } from "../config";
 import { AuthContext } from "../context/authContext";
-import MenuIcon from "@material-ui/icons/Menu";
-import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [search, setSearch] = useState("");
   const {
     state: { user },
     dispatch,
@@ -46,6 +48,11 @@ export default function ButtonAppBar() {
 
   const handleSearch = (evt) => {
     evt.preventDefault();
+    if (!search) {
+      return toast.error("Please enter at least one character.");
+    }
+    setSearch("");
+    router.push(`/search/${search}`);
   };
 
   return (
@@ -107,6 +114,8 @@ export default function ButtonAppBar() {
                     input: classes.inputInput,
                   }}
                   inputProps={{ "aria-label": "search" }}
+                  value={search}
+                  onChange={(evt) => setSearch(evt.target.value)}
                 />
               </Box>
               <Button
@@ -183,6 +192,8 @@ export default function ButtonAppBar() {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              value={search}
+              onChange={(evt) => setSearch(evt.target.value)}
             />
           </Box>
           <Button type="submit">Search</Button>
