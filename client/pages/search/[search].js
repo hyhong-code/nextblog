@@ -1,18 +1,20 @@
 import React, { Fragment } from "react";
 import { useRouter } from "next/router";
+import NextLink from "next/link";
+import { useTheme } from "@material-ui/core";
 
 import Typography from "@material-ui/core/Typography";
 
-import BlogCard from "../../components/blogs/BlogCard";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 
 const Search = ({ blogs }) => {
   const router = useRouter();
+  const theme = useTheme();
 
   if (!blogs.length) {
     return (
-      <Typography variant="h3" component="h1">
+      <Typography variant="h5" component="h1">
         No search results for "{router.query.search}".
       </Typography>
     );
@@ -20,11 +22,24 @@ const Search = ({ blogs }) => {
 
   return (
     <Fragment>
-      <Typography variant="h3" component="h1" paragraph>
+      <Typography variant="h5" component="h1" paragraph>
         {blogs.length} search results for "{router.query.search}":
       </Typography>
       {blogs.map((b) => (
-        <BlogCard key={b._id} blog={b} />
+        <NextLink href={`/blogs/${b.slug}`} key={b._id}>
+          <Typography
+            component="a"
+            gutterBottom
+            style={{
+              cursor: "pointer",
+              color: theme.palette.primary.main,
+              display: "block",
+              textDecoration: "underline",
+            }}
+          >
+            {b.title}
+          </Typography>
+        </NextLink>
       ))}
     </Fragment>
   );

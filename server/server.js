@@ -10,6 +10,7 @@ const authRouter = require("./routes/auth");
 const blogRouter = require("./routes/blog");
 const categoryRouter = require("./routes/category");
 const tagRouter = require("./routes/tag");
+const userRouter = require("./routes/user");
 
 const app = express();
 connectDB();
@@ -27,6 +28,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/blogs", blogRouter);
 app.use("/api/v1/categories", categoryRouter);
 app.use("/api/v1/tags", tagRouter);
+app.use("/api/v1/users", userRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Server up on port ${port}...`));
