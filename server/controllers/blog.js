@@ -115,6 +115,27 @@ exports.scanBlogs = async (req, res, next) => {
   }
 };
 
+exports.searchBlogs = async (req, res, next) => {
+  try {
+    const { search } = req.query;
+    const blogs = await Blog.find({
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+      ],
+    });
+
+    res.status(200).json({
+      data: { blogs },
+    });
+  } catch (error) {
+    console.error("[SEARCH BLOGS ERROR]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
+};
+
 exports.readBlog = async (req, res, next) => {
   try {
     const { slug } = req.params;

@@ -77,7 +77,7 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
 
         <Box>
           {blog.categories?.map((c) => (
-            <NextLink key={c.slug} href={`/categories/${c.name}`}>
+            <NextLink key={c.slug} href={`/categories/${c.slug}`}>
               <Chip
                 label={c.name}
                 component="a"
@@ -90,7 +90,7 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
 
         <Box style={{ margin: "0.5rem 0 1rem" }}>
           {blog.tags?.map((t) => (
-            <NextLink key={t.slug} href={`/tags/${t.name}`}>
+            <NextLink key={t.slug} href={`/tags/${t.slug}`}>
               <Chip
                 label={`#${t.name}`}
                 component="a"

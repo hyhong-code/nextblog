@@ -9,6 +9,7 @@ const {
   createBlog,
   listBlogs,
   scanBlogs,
+  searchBlogs,
   readBlog,
   updateBlog,
   deleteBlog,
@@ -17,6 +18,7 @@ const {
 } = require("../controllers/blog");
 
 router.route("/scan").get(scanBlogs);
+router.route("/search").get(searchBlogs);
 router.route("/similar").post(listSimilarBlogs);
 router.route("/me").post(auth, listUserBlogs);
 router
