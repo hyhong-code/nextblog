@@ -1,5 +1,5 @@
 import { Fragment, useState, useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, fade } from "@material-ui/core/styles";
 import NextLink from "next/link";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -9,6 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+import InputBase from "@material-ui/core/InputBase";
+
+import SearchIcon from "@material-ui/icons/Search";
 
 import axios from "../utils/axios";
 import { API } from "../config";
@@ -16,21 +20,10 @@ import { AuthContext } from "../context/authContext";
 import MenuIcon from "@material-ui/icons/Menu";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const {
     state: { user },
     dispatch,
@@ -42,13 +35,17 @@ export default function ButtonAppBar() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get(`${API}/v1/auth/logout`);
+      await axios.get(`${API}/v1/auth/logout`);
       dispatch({ type: "LOGOUT" });
     } catch (error) {
       console.error("[LOGOUT ERROR]", error.response);
       dispatch({ type: "AUTH_ERROR" });
     }
     setDrawerOpen(false);
+  };
+
+  const handleSearch = (evt) => {
+    evt.preventDefault();
   };
 
   return (
@@ -74,7 +71,7 @@ export default function ButtonAppBar() {
                 component="a"
                 variant="h6"
                 className={classes.title}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", marginRight: "1rem" }}
               >
                 Nextjs Blog
               </Typography>
@@ -82,10 +79,45 @@ export default function ButtonAppBar() {
 
             {/* Blogs */}
             <NextLink href="/blogs">
-              <Button component="a" color="inherit">
+              <Button
+                component="a"
+                color="inherit"
+                variant="contained"
+                color="secondary"
+                style={{ marginRight: "auto" }}
+              >
                 Blogs
               </Button>
             </NextLink>
+
+            {/* Navbar Search */}
+            <Box
+              component="form"
+              onSubmit={handleSearch}
+              style={{ display: "flex" }}
+            >
+              <Box className={classes.search}>
+                <Box className={classes.searchIcon}>
+                  <SearchIcon />
+                </Box>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Box>
+              <Button
+                variant="outlined"
+                color="inherit"
+                style={{ margin: "0 1rem 0 0.5rem" }}
+                type="submit"
+              >
+                Search
+              </Button>
+            </Box>
 
             {/* Links */}
             {!user ? (
@@ -133,6 +165,29 @@ export default function ButtonAppBar() {
           <ClearRoundedIcon />
         </IconButton>
 
+        {/* Drawer Search Bar */}
+        <Box
+          component="form"
+          onSubmit={handleSearch}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <Box className={classes.search} style={{ margin: `0 0 1rem` }}>
+            <Box className={classes.searchIcon}>
+              <SearchIcon />
+            </Box>
+            <InputBase
+              style={{ borderBottom: "1px solid #000", width: "100%" }}
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Box>
+          <Button type="submit">Search</Button>
+        </Box>
+
         {/* Blogs */}
         <NextLink href="/blogs">
           <Button component="a" color="inherit">
@@ -170,3 +225,51 @@ export default function ButtonAppBar() {
     </Fragment>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputRoot: {
+    color: "inherit",
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
