@@ -88,7 +88,7 @@ const index = ({
         }}
       >
         {preCategories.map((c) => (
-          <NextLink key={c.slug} href={`/categories/${c.name}`}>
+          <NextLink key={c.slug} href={`/categories/${c.slug}`}>
             <Chip
               label={c.name}
               component="a"
@@ -108,7 +108,7 @@ const index = ({
         }}
       >
         {preTags.map((t) => (
-          <NextLink key={t.slug} href={`/tags/${t.name}`}>
+          <NextLink key={t.slug} href={`/tags/${t.slug}`}>
             <Chip
               label={`#${t.name}`}
               component="a"

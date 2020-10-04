@@ -15,7 +15,9 @@ const {
   createCategoryValidators,
   updateCategoryValidator,
 } = require("../utils/validators/category");
+const blogRouter = require("./blog");
 
+router.use("/:categoryId/blogs", blogRouter);
 router
   .route("/:slug")
   .get(readCategory)

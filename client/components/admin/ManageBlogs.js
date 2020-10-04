@@ -44,7 +44,6 @@ const ManageBlogs = ({ blogs: preBlogs, categories, tags }) => {
     setLoading(true);
     try {
       const res = await axios.delete(`${API}/v1/blogs/${selectedBlog.slug}`);
-      console.log(res.data);
       toast.success(res.data.data.msg);
       setBlogs((prev) => prev.filter((b) => b._id !== selectedBlog._id));
       handleDeleteDialogClose();

@@ -54,7 +54,7 @@ const Blog = ({
     content: blog.content,
     photo: blog.photo,
   });
-  const { title, content, photo } = formData;
+  const { title, content } = formData;
 
   const [loading, setLoading] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(
@@ -105,7 +105,6 @@ const Blog = ({
       toast.success(`${res.data.data.blog.title} is successfully Updated.`);
       router.push("/admin/blogs-manage");
     } catch (error) {
-      console.log(error);
       console.error("[UPDATE BLOG ERROR]", error.response);
       setLoading(false);
       toast.error(error.response.data.errors.map((e) => e.msg).join(" "));
@@ -254,7 +253,6 @@ const Blog = ({
 export default Blog;
 
 export const getStaticProps = async (ctx) => {
-  console.log(ctx);
   let categories = [];
   try {
     const res = await axios.get(`${API}/v1/categories`);

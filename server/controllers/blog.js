@@ -45,7 +45,19 @@ exports.createBlog = async (req, res, next) => {
 
 exports.listBlogs = async (req, res, next) => {
   try {
-    const blogs = await Blog.find();
+    const { categoryId, tagId } = req.params;
+
+    const queryObj = {};
+    // Get posts by cateory
+    if (categoryId) {
+      queryObj.categories = categoryId;
+    }
+    // Get posts by tag
+    if (tagId) {
+      queryObj.tags = tagId;
+    }
+
+    const blogs = await Blog.find(queryObj);
     res.status(200).json({
       data: { blogs },
     });
