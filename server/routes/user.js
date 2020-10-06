@@ -9,6 +9,6 @@ const blogRouter = require("./blog");
 router.use("/:userId/blogs", blogRouter);
 
 router.route("/:username").get(readPublicProfile);
-router.route("/").get(auth, listUsers);
+router.route("/").get(listUsers);
 
 module.exports = router;
