@@ -45,7 +45,7 @@ exports.createBlog = async (req, res, next) => {
 
 exports.listBlogs = async (req, res, next) => {
   try {
-    const { categoryId, tagId } = req.params;
+    const { categoryId, tagId, userId } = req.params;
 
     const queryObj = {};
     // Get posts by cateory
@@ -55,6 +55,11 @@ exports.listBlogs = async (req, res, next) => {
     // Get posts by tag
     if (tagId) {
       queryObj.tags = tagId;
+    }
+
+    // Get posts by user
+    if (userId) {
+      queryObj.postedBy = userId;
     }
 
     const blogs = await Blog.find(queryObj);

@@ -1,7 +1,19 @@
 const User = require("../models/User");
 const Blog = require("../models/Blog");
 
-exports.readMyProfile = async (req, res, next) => {};
+exports.listUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({
+      data: { users },
+    });
+  } catch (error) {
+    console.error("[listUsers]", error);
+    return res.status(500).json({
+      errors: [{ msg: "Something went wrong, try again later." }],
+    });
+  }
+};
 
 exports.readPublicProfile = async (req, res, next) => {
   try {
