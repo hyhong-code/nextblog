@@ -15,10 +15,9 @@ const Username = ({ profile = {}, blogsByUser = [] }) => {
   console.log(blogsByUser);
   return (
     <Box>
-      <Card elevation={3}>
+      <Card elevation={3} style={{ marginBottom: "2rem" }}>
         <CardContent style={{ display: "flex" }}>
           <Avatar style={{ height: 150, width: 150, marginRight: "2rem" }} />
-
           <Box>
             <Typography variant="h5">{profile.name}</Typography>
             <Typography>
@@ -35,6 +34,27 @@ const Username = ({ profile = {}, blogsByUser = [] }) => {
           </Box>
         </CardContent>
       </Card>
+
+      <Grid container spacing={4}>
+        <Grid item xs>
+          <Card elevation={3}>
+            <CardContent>
+              {blogsByUser.map((b) => (
+                <Link href={`/blogs/${b.slug}`}>
+                  <a style={{ display: "block", marginBottom: "0.5rem" }}>
+                    {b.title}
+                  </a>
+                </Link>
+              ))}
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs>
+          <Card elevation={3}>
+            <CardContent>Contact Form</CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
