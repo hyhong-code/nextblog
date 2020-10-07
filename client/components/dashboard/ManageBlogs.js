@@ -23,7 +23,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 
-const ManageBlogs = ({ blogs: preBlogs, categories, tags }) => {
+const ManageBlogs = ({ blogs: preBlogs }) => {
   const [blogs, setBlogs] = useState(preBlogs);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);

@@ -1,10 +1,11 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useContext } from "react";
 import dynamic from "next/dynamic";
 import { DropzoneArea } from "material-ui-dropzone";
 import { toast } from "react-toastify";
 import ImageFadeIn from "react-image-fade-in";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
+import { AuthContext } from "../../context/authContext";
 
 // Only import reactQuill on client side
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -29,6 +30,9 @@ const Blog = ({
   blog = {},
 }) => {
   const router = useRouter();
+  const {
+    state: { user },
+  } = useContext(AuthContext);
 
   const setInitialCategories = preCategories.reduce((acc, cur) => {
     if (blog.categories?.map((b) => b._id).includes(cur._id)) {
@@ -103,7 +107,9 @@ const Blog = ({
       });
       setLoading(false);
       toast.success(`${res.data.data.blog.title} is successfully Updated.`);
-      router.push("/admin/blogs-manage");
+      router.push(
+        user.role === "ADMIN" ? "/admin/blogs-manage" : "/user/blogs-manage"
+      );
     } catch (error) {
       console.error("[UPDATE BLOG ERROR]", error.response);
       setLoading(false);

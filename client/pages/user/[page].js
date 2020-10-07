@@ -8,10 +8,10 @@ import useProtectedRoute from "../../hooks/useProtectedRoute";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 import restrictToUser from "../../utils/restrictToUser";
-import SideTabs from "../../components/admin/SideTabs";
+import SideTabs from "../../components/dashboard/SideTabs";
 import Profile from "../../components/dashboard/profile";
-import Blog from "../../components/admin/Blog";
-import ManageBlog from "../../components/admin/ManageBlogs";
+import Blog from "../../components/dashboard/CreateBlog";
+import ManageBlog from "../../components/dashboard/ManageBlogs";
 import extractCookieValue from "../../utils/extractCookieValue";
 
 const Layout = ({ categories, tags, userBlogs }) => {

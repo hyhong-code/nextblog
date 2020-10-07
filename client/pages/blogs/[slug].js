@@ -1,8 +1,6 @@
-import React, { Fragment } from "react";
-
+import { Fragment } from "react";
 import Head from "next/head";
 import NextLink from "next/link";
-import { API, DOMAIN, APP_NAME, FB_APP_ID } from "../../config";
 import { formatDistance } from "date-fns";
 import parse from "html-react-parser";
 import ImageFadeIn from "react-image-fade-in";
@@ -13,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import Chip from "@material-ui/core/Chip";
 import Divider from "@material-ui/core/Divider";
 
+import { API, DOMAIN, APP_NAME, FB_APP_ID } from "../../config";
 import SimilarCard from "../../components/blogs/SimilarCard";
 import axios from "../../utils/axios";
 
@@ -48,6 +47,7 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
           transition={1000}
           src={blog.photo?.url}
           alt={blog.title}
+          height={250}
           style={{
             width: "100%",
             height: 250,
@@ -67,7 +67,10 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
         </Typography>
 
         <Typography variant="subtitle1" component="h2" gutterBottom>
-          {blog.postedBy?.name} |{" "}
+          <NextLink href={`/profile/${blog.postedBy?.username}`}>
+            <a>@{blog.postedBy?.username}</a>
+          </NextLink>{" "}
+          |{" "}
           {blog.createdAt
             ? formatDistance(new Date(blog.createdAt), new Date(), {
                 addSuffix: true,

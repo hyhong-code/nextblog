@@ -77,7 +77,6 @@ exports.listBlogs = async (req, res, next) => {
 exports.listUserBlogs = async (req, res, next) => {
   try {
     const blogs = await Blog.find({ postedBy: req.user._id });
-    console.log({ blogs });
     res.status(200).json({
       data: { blogs },
     });

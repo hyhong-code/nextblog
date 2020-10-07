@@ -9,11 +9,11 @@ import { AuthContext } from "../../context/authContext";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 import restrictToAdmin from "../../utils/restrictToAdmin";
-import SideTabs from "../../components/admin/SideTabs";
+import SideTabs from "../../components/dashboard/SideTabs";
 import Tags from "../../components/admin/Tags";
 import Categories from "../../components/admin/Categories";
-import Blog from "../../components/admin/Blog";
-import ManageBlog from "../../components/admin/ManageBlogs";
+import Blog from "../../components/dashboard/CreateBlog";
+import ManageBlog from "../../components/dashboard/ManageBlogs";
 import Profile from "../../components/dashboard/profile";
 
 const Layout = ({ categories, tags, blogs }) => {

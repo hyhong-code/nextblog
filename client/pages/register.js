@@ -31,11 +31,12 @@ const Register = () => {
   const INPUT_FIELDS = [
     { label: "Name", name: "name", value: name },
     { label: "Email", name: "email", value: email },
-    { label: "Password", name: "password", value: password },
+    { label: "Password", name: "password", value: password, isPW: true },
     {
       label: "Confirm Password",
       name: "passwordConfirm",
       value: passwordConfirm,
+      isPW: true,
     },
   ];
 
@@ -68,7 +69,7 @@ const Register = () => {
             <Typography variant="h4" component="h1" align="center">
               Sign up
             </Typography>
-            {INPUT_FIELDS.map(({ label, name, value }) => (
+            {INPUT_FIELDS.map(({ label, name, value, isPW }) => (
               <TextField
                 key={`register-${name}`}
                 id={`register-${name}`}
@@ -77,6 +78,7 @@ const Register = () => {
                 value={value}
                 onChange={handleChange}
                 fullWidth
+                inputProps={{ type: isPW ? "password" : undefined }}
               />
             ))}
             <Button

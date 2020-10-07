@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
 const auth = require("../middlewares/auth");
-const restrictTo = require("../middlewares/restrictTo");
 const { updateUserValidators } = require("../utils/validators/user");
 const validate = require("../middlewares/validate");
 

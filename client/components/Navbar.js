@@ -52,6 +52,7 @@ export default function ButtonAppBar() {
       return toast.error("Please enter at least one character.");
     }
     setSearch("");
+    toggleDrawer();
     router.push(`/search/${search}`);
   };
 

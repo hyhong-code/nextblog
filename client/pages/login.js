@@ -28,7 +28,7 @@ const Login = () => {
 
   const INPUT_FIELDS = [
     { label: "Email", name: "email", value: email },
-    { label: "Password", name: "password", value: password },
+    { label: "Password", name: "password", value: password, isPW: true },
   ];
 
   const handleChange = (evt) => {
@@ -60,7 +60,7 @@ const Login = () => {
             <Typography variant="h4" component="h1" align="center">
               Sign in
             </Typography>
-            {INPUT_FIELDS.map(({ label, name, value }) => (
+            {INPUT_FIELDS.map(({ label, name, value, isPW }) => (
               <TextField
                 key={`register-${name}`}
                 id={`register-${name}`}
@@ -69,6 +69,7 @@ const Login = () => {
                 value={value}
                 onChange={handleChange}
                 fullWidth
+                inputProps={{ type: isPW ? "password" : undefined }}
               />
             ))}
             <Button

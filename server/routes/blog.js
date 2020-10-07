@@ -1,7 +1,6 @@
 const router = require("express").Router({ mergeParams: true });
 
 const auth = require("../middlewares/auth");
-const restrictTo = require("../middlewares/restrictTo");
 const validate = require("../middlewares/validate");
 const { createBlogValidators } = require("../utils/validators/blog");
 
