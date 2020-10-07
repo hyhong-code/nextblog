@@ -129,7 +129,7 @@ export const getStaticPaths = async () => {
   let paths = [];
   try {
     const res = await axios.get(`${API}/v1/users`);
-    paths = res.data.data.users.map((u) => ({
+    paths = res.data.data.users.slice(0, 4).map((u) => ({
       params: { username: u.username },
     }));
   } catch (error) {

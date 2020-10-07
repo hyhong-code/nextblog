@@ -146,10 +146,12 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
-  let paths;
+  let paths = [];
   try {
     const res = await axios.get(`${API}/v1/blogs`);
-    paths = res.data.data.blogs.map((b) => ({ params: { slug: b.slug } }));
+    paths = res.data.data.blogs
+      .slice(0, 4)
+      .map((b) => ({ params: { slug: b.slug } }));
   } catch (error) {
     console.error("[FETCH BLOG ERROR]", error);
   }

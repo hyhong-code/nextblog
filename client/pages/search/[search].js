@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 
-const Search = ({ blogs }) => {
+const Search = ({ blogs = [] }) => {
   const router = useRouter();
   const theme = useTheme();
 
@@ -47,7 +47,7 @@ const Search = ({ blogs }) => {
 
 export default Search;
 
-export const getServerSideProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   let blogs = [];
   try {
     const res = await axios.get(
@@ -59,8 +59,14 @@ export const getServerSideProps = async ({ params }) => {
   }
 
   return {
-    props: {
-      blogs,
-    },
+    props: { blogs },
+    revalidate: 1,
+  };
+};
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: true,
   };
 };

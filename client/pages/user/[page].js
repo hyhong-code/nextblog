@@ -76,7 +76,6 @@ export const getServerSideProps = async ({ req, res }) => {
       },
     });
     userBlogs = res.data.data.blogs;
-    console.log({ userBlogs });
   } catch (error) {
     console.error("[FETCH USER BLOGS]", error);
   }

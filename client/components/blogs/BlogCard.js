@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import Image from "react-image-fade-in";
+import ImageFadeIn from "react-image-fade-in";
 import { formatDistance } from "date-fns";
 
 import Typography from "@material-ui/core/Typography";
@@ -76,11 +76,12 @@ const BlogCard = ({ blog }) => {
       </section>
       <Grid container spacing={3}>
         <Grid item xs={4}>
-          {/* Image */}
-          <Image
+          {/* Photo */}
+          <ImageFadeIn
             transition={1000}
             src={blog.photo?.url}
             alt={blog.title}
+            height={150}
             style={{
               height: 150,
               width: "100%",

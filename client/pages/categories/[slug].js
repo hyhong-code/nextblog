@@ -102,7 +102,9 @@ export const getStaticPaths = async () => {
 
   try {
     const res = await axios.get(`${API}/v1/categories`);
-    paths = res.data.data.categories.map((c) => ({ params: { slug: c.slug } }));
+    paths = res.data.data.categories
+      .slice(0, 4)
+      .map((c) => ({ params: { slug: c.slug } }));
   } catch (error) {
     console.error("[FETCH CATEGOIES ERROR]", error);
   }
