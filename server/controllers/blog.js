@@ -16,7 +16,7 @@ exports.createBlog = async (req, res, next) => {
 
     let updateRes;
     if (photo) {
-      updateRes = await s3UploadImage(photo);
+      updateRes = await s3UploadImage(photo, "category");
     }
 
     const createObj = {
@@ -230,7 +230,7 @@ exports.updateBlog = async (req, res, next) => {
       if (blog.photo) {
         await s3DeleteImage(blog.photo.key);
       }
-      uploadRes = await s3UploadImage(photo);
+      uploadRes = await s3UploadImage(photo, "category");
     }
 
     // Set update object

@@ -17,7 +17,7 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 // Transform image into buffer and upload s3
-exports.s3UploadImage = async (image) => {
+exports.s3UploadImage = async (image, colectionName) => {
   // Process Image data
   const imageBase64Buffer = new Buffer.from(
     image.replace(/^data:image\/\w+;base64,/, ""),
@@ -28,7 +28,7 @@ exports.s3UploadImage = async (image) => {
 
   const s3UploadParams = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
-    Key: `category/${uuidv4()}.${imageType}`,
+    Key: `${colectionName}/${uuidv4()}.${imageType}`,
     Body: imageBase64Buffer,
     ACL: process.env.AWS_S3_BUCKET_ACL, // public-read -> so users can view image
     ContentType: `image/${imageType}`,
