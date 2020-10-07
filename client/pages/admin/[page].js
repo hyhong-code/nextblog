@@ -1,9 +1,11 @@
-import { Fragment } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
+import useProtectedRoute from "../../hooks/useProtectedRoute";
+import { AuthContext } from "../../context/authContext";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 import restrictToAdmin from "../../utils/restrictToAdmin";
@@ -12,9 +14,13 @@ import Tags from "../../components/admin/Tags";
 import Categories from "../../components/admin/Categories";
 import Blog from "../../components/admin/Blog";
 import ManageBlog from "../../components/admin/ManageBlogs";
+import Profile from "../../components/dashboard/profile";
 
 const Layout = ({ categories, tags, blogs }) => {
+  useProtectedRoute("/", "ADMIN");
+
   const PATH_COMPONENT_MAP = {
+    ["/admin/profile"]: <Profile />,
     ["/admin/categories"]: <Categories categories={categories} />,
     ["/admin/tags"]: <Tags tags={tags} />,
     ["/admin/blogs-create"]: <Blog categories={categories} tags={tags} />,

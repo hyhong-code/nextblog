@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
+import useProtectedRoute from "../../hooks/useProtectedRoute";
 import axios from "../../utils/axios";
 import { API } from "../../config";
 import restrictToUser from "../../utils/restrictToUser";
@@ -14,6 +15,8 @@ import ManageBlog from "../../components/admin/ManageBlogs";
 import extractCookieValue from "../../utils/extractCookieValue";
 
 const Layout = ({ categories, tags, userBlogs }) => {
+  useProtectedRoute("/", "USER");
+
   const PATH_COMPONENT_MAP = {
     ["/user/profile"]: <Profile />,
     ["/user/blogs-create"]: <Blog categories={categories} tags={tags} />,

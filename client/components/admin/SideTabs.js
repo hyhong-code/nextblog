@@ -15,6 +15,10 @@ const SideTabs = ({ isAdmin = true }) => {
   const subPaths = isAdmin
     ? [
         {
+          pathname: "/admin/profile",
+          label: "Profile",
+        },
+        {
           pathname: "/admin/blogs-manage",
           label: "Manage Blogs",
         },
