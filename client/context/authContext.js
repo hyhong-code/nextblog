@@ -14,6 +14,7 @@ const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
     case "USER_LOADED":
+    case "USER_UPDATED":
       return { ...state, user: payload };
     case "LOGOUT":
     case "AUTH_ERROR":
@@ -44,7 +45,9 @@ export const loadUser = async (dispatch, router) => {
     dispatch({ type: "USER_LOADED", payload: user });
 
     if (router) {
-      router.push(user.role === "ADMIN" ? "/admin/blogs-manage" : "user");
+      router.push(
+        user.role === "ADMIN" ? "/admin/blogs-manage" : "/user/profile"
+      );
     }
   } catch (error) {
     console.error("[LOADUSER ERROR]", error);

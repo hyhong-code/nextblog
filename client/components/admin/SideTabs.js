@@ -11,30 +11,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PATHS = [
-  {
-    pathname: "/admin/blogs-manage",
-    label: "Manage Blogs",
-  },
-  {
-    pathname: "/admin/blogs-create",
-    label: "Create Blogs",
-  },
-  {
-    pathname: "/admin/categories",
-    label: "Manage Categories",
-  },
-  {
-    pathname: "/admin/tags",
-    label: "Manage Tags",
-  },
-];
-
-const SideTabs = () => {
+const SideTabs = ({ isAdmin = true }) => {
+  const subPaths = isAdmin
+    ? [
+        {
+          pathname: "/admin/blogs-manage",
+          label: "Manage Blogs",
+        },
+        {
+          pathname: "/admin/blogs-create",
+          label: "Create Blogs",
+        },
+        {
+          pathname: "/admin/categories",
+          label: "Manage Categories",
+        },
+        {
+          pathname: "/admin/tags",
+          label: "Manage Tags",
+        },
+      ]
+    : [
+        {
+          pathname: "/user/profile",
+          label: "Profile",
+        },
+        {
+          pathname: "/user/blogs-manage",
+          label: "Manage Blogs",
+        },
+        {
+          pathname: "/user/blogs-create",
+          label: "Create Blogs",
+        },
+      ];
   const classes = useStyles();
   const router = useRouter();
 
-  const value = () => PATHS.findIndex((v) => v.pathname === router.asPath);
+  const value = () => subPaths.findIndex((v) => v.pathname === router.asPath);
 
   return (
     <Tabs
@@ -44,7 +58,7 @@ const SideTabs = () => {
       aria-label="Vertical tabs example"
       className={classes.tabs}
     >
-      {PATHS.map((p, idx) => (
+      {subPaths.map((p, idx) => (
         <NextLink href={p.pathname} key={idx}>
           <Tab component="a" label={p.label} />
         </NextLink>

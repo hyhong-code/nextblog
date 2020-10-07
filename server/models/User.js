@@ -70,6 +70,14 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.pre("validate", function (next) {
+  if (!(this.isNew || this.isModified("username"))) {
+    return next();
+  }
+  this.profile = `${process.env.CLIENT_URL}/profile/${this.username}`;
+  next();
+});
+
 // Check if given plain text passowd matches saved hash
 userSchema.methods.isCorrectPassword = async function (plainTextPassword) {
   return await bcrypt.compare(plainTextPassword, this.password);

@@ -48,7 +48,7 @@ exports.readPublicProfile = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const { photo, username } = req.body;
+    const { photo, username, password } = req.body;
     let user = await User.findById(req.user._id);
 
     // Upload photo to s3
@@ -57,12 +57,17 @@ exports.updateUser = async (req, res, next) => {
         await s3DeleteImage(user.photo.key);
       }
       const uploadRes = await s3UploadImage(photo, "user");
-      req.body.photo = { key: uploadRes.Key, url: uploadRes.url };
+      req.body.photo = { key: uploadRes.Key, url: uploadRes.Location };
     }
 
     // Update profile url
-    if (username && username !== user.username) {
-      req.body.profile = `${process.env.CLIENT_URL}/profile/${username}`;
+    if (username !== user.username) {
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+        return res.status(500).json({
+          errors: [{ msg: `Username ${username} is already taken.` }],
+        });
+      }
     }
 
     // Update user

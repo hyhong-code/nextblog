@@ -15,11 +15,7 @@ exports.register = async (req, res, next) => {
 
     // Create user
     const username = shortId.generate();
-    user = await User.create({
-      ...req.body,
-      username,
-      profile: `${process.env.CLIENT_URL}/profile/${username}`,
-    });
+    user = await User.create({ ...req.body, username });
 
     // Send back a token
     const token = user.genJwtToken();

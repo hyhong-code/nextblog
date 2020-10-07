@@ -18,6 +18,6 @@ router.route("/:username").get(readPublicProfile);
 router
   .route("/")
   .get(listUsers)
-  .put(auth, updateUserValidators, validate, updateUser);
+  .put(auth, updateUserValidators, validate, updateUser); // Update signed in user
 
 module.exports = router;
