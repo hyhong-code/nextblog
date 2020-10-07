@@ -50,13 +50,13 @@ const Username = ({ profile = {}, blogsByUser = [] }) => {
   return (
     <Fragment>
       {head()}
-
       <Box>
         <Card elevation={3} style={{ marginBottom: "2rem" }}>
           <CardContent style={{ display: "flex" }}>
             <Avatar style={{ height: 150, width: 150, marginRight: "2rem" }} />
             <Box>
-              <Typography variant="h5">{profile.name}</Typography>
+              <Typography variant="h5">@{profile.username}</Typography>
+              <Typography>{profile.name}</Typography>
               <Typography>
                 Joined{" "}
                 {formatDistance(

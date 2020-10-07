@@ -33,7 +33,11 @@ const BlogCard = ({ blog }) => {
       <section>
         {/* Created by and date */}
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          Published by {blog.postedBy.name} |{" "}
+          Published by{" "}
+          <NextLink href={`/profile/${blog.postedBy.username}`}>
+            <a>@{blog.postedBy.username}</a>
+          </NextLink>{" "}
+          |{" "}
           {formatDistance(new Date(blog.updatedAt), new Date(), {
             addSuffix: true,
           })}

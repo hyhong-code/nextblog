@@ -35,7 +35,11 @@ const SimilarCard = ({ blog }) => {
                 gutterBottom
                 style={{ fontSize: "0.9rem" }}
               >
-                Published by {blog.postedBy.name} |{" "}
+                Published by{" "}
+                <NextLink href={`/profile/${blog.postedBy.username}`}>
+                  <a>@{blog.postedBy.username}</a>
+                </NextLink>{" "}
+                |{" "}
                 {formatDistance(new Date(blog.updatedAt), new Date(), {
                   addSuffix: true,
                 })}
