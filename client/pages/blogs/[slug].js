@@ -11,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import Chip from "@material-ui/core/Chip";
 import Divider from "@material-ui/core/Divider";
 
+import DisqusThread from "../../components/blogs/DisqusThread";
 import { API, DOMAIN, APP_NAME, FB_APP_ID } from "../../config";
 import SimilarCard from "../../components/blogs/SimilarCard";
 import axios from "../../utils/axios";
@@ -109,6 +110,15 @@ const Blog = ({ blog = {}, similarBlogs = [] }) => {
         {blog.content && <Box>{parse(blog.content)}</Box>}
 
         <Divider style={{ margin: "1rem 0" }} />
+
+        {/* DISQUS */}
+        <Box>
+          <DisqusThread
+            id={blog.id}
+            title={blog.title}
+            path={`/blog/${blog.slug}`}
+          />
+        </Box>
 
         <Typography align="center" variant="h5" paragraph>
           Similar Blogs
