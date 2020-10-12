@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-exports.contactFormValidator = [
+exports.contactFormValidators = [
   body("name").not().isEmpty().withMessage("Name cannot be empty."),
   body("email").isEmail().withMessage("Email is required."),
   body("message")
